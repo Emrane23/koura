@@ -37,15 +37,15 @@
 
         public function register(Request $request)
         {
-                $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
+        //         $validator = Validator::make($request->all(), [
+        //         'name' => 'required|string|max:255',
+        //         'email' => 'required|string|email|max:255|unique:users',
                 
-            ]);
+        //     ]);
 
-            if($validator->fails()){
-                    return response()->json($validator->errors()->toJson(), 400);
-            }
+        //     if($validator->fails()){
+        //             return response()->json($validator->errors()->toJson(), 400);
+        //     }
             $input = $request->all();
             $input['password']=Hash::make($request->get('password'));
             $user = User::create($input);

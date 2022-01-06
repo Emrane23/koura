@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Stade;
+
 use Illuminate\Http\Request;
 
 class StatController extends Controller
@@ -12,6 +14,7 @@ class StatController extends Controller
         
        $propsum =User::where("role","=","Prop")->count();
        $usersum =User::where("role","=","User")->count();
-        return response()->json(array ('Proprietaire' =>$propsum,'Utilisateur' =>$usersum));
+       $stade= Stade::all()->count();
+        return response()->json(array ('Proprietaire' =>$propsum,'Utilisateur' =>$usersum, 'Stade'=>$stade));
     }
 }
