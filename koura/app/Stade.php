@@ -16,10 +16,12 @@ class Stade extends Model
     ];
 
 
-
+    public function reservations(){
+        return $this->hasMany('App\reservation' , 'stade_id','id');
+    }
 
 
     public function proprietaires(){
-        return $this->hasMany('App\User' , 'id','id');
+        return $this->belongsTo('App\User' , 'proprietaire_id','id');
     }
 }

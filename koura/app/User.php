@@ -28,6 +28,15 @@
             'password', 'remember_token',
         ];
 
+
+        public function reservations(){
+            return $this->hasMany('App\reservation' , 'client_id','id');
+        }
+
+        public function stades(){
+            return $this->hasMany('App\Stade' , 'proprietaire_id','id');
+        }
+        
         public function getJWTIdentifier()
         {
             return $this->getKey();
