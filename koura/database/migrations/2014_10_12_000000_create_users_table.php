@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('gouvernorat');
             $table->string('sexe');
             $table->string('delegation');
+            $table->string('nbr_terrain');
+            $table->string('localisation')->nullable();
             $table->string('telephone')->nullable();
             $table->string('image')->nullable();
             $table->string('test')->nullable();

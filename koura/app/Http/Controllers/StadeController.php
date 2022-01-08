@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Stade;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 
 class StadeController extends Controller
@@ -26,6 +27,17 @@ class StadeController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+       
+        if($request->file('image'))
+       {
+           
+           $file = $request->file('image');
+           $extension = $file->getClientOriginalExtension();
+           $filename = time() . '.' . $extension;
+           $file->file_put_contents('storage\stades\\'.$filename,base64_decode($request->image));
+           $input['image'] = $filename;
+       }
+       
         $stade=Stade::create($input);
         return response()->json($stade,200);
     }

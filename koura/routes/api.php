@@ -14,13 +14,33 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('stat',[\App\Http\Controllers\StatController::class,'stat']);
-Route::post('users',[\App\Http\Controllers\CrudusprController::class,'index']);
-Route::get('user/{id}',[\App\Http\Controllers\CrudusprController::class,'show']);
-Route::post('adduser',[\App\Http\Controllers\CrudusprController::class,'store']);
-Route::delete('user/{id}',[\App\Http\Controllers\CrudusprController::class,'destroy']);
+
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'authenticate']);
+
+// ***** Crud proprietaire 
+Route::post('stat',[\App\Http\Controllers\StatController::class,'stat']);
+Route::post('props',[\App\Http\Controllers\CrudusprController::class,'index']);
+Route::get('prop/{id}',[\App\Http\Controllers\CrudusprController::class,'show']);
+Route::post('addpropsusers',[\App\Http\Controllers\CrudusprController::class,'store']);
+Route::delete('prop/{id}',[\App\Http\Controllers\CrudusprController::class,'destroy']);
+
+// Crud user
+Route::post('users',[\App\Http\Controllers\UserController::class,'index']);
+Route::get('user/{id}',[\App\Http\Controllers\UserController::class,'show']);
+Route::delete('user/{id}',[\App\Http\Controllers\UserController::class,'destroy']);
+
+
+// admin
 Route::post('register', [\App\Http\Controllers\AuthController::class, 'register']);
+
+//Crud stade
+Route::post('stades',[\App\Http\Controllers\StadeController::class,'index']);
+Route::get('stade/{id}',[\App\Http\Controllers\StadeController::class,'show']);
+Route::post('addstade',[\App\Http\Controllers\StadeController::class,'store']);
+Route::delete('stade/{id}',[\App\Http\Controllers\CrudusprController::class,'destroy']);
+
+Route::post('/changepassword',[\App\Http\Controllers\ProfileController::class, 'change_password']);
+
 Route::group(['middleware' => ['api']], function() {
     
     

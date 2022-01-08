@@ -23,7 +23,6 @@ class CreateStadesTable extends Migration
             $table->string('gouvernorat');
             $table->string('delegation');
             $table->string('image')->nullable();
-            $table->string('nbr_terrain');
             $table->string('capacite');
             $table->string('horaire_ouverture');
             $table->string('horaire_fermeture');
