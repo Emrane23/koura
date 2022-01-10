@@ -28,15 +28,13 @@ class StadeController extends Controller
     {
         $input = $request->all();
        
-        if($request->file('image'))
-       {
-           
-           $file = $request->file('image');
-           $extension = $file->getClientOriginalExtension();
-           $filename = time() . '.' . $extension;
-           $file->file_put_contents('storage\stades\\'.$filename,base64_decode($request->image));
-           $input['image'] = $filename;
-       }
+    //     if($request->image != '')
+    //    {
+
+    //        $filename = time() . '.jpg';
+    //        file_put_contents('storage\stades\\'.$filename,base64_decode($request->image));
+    //        $input['image'] = $filename;
+    //    }
        
         $stade=Stade::create($input);
         return response()->json($stade,200);

@@ -23,11 +23,17 @@ Route::post('props',[\App\Http\Controllers\CrudusprController::class,'index']);
 Route::get('prop/{id}',[\App\Http\Controllers\CrudusprController::class,'show']);
 Route::post('addpropsusers',[\App\Http\Controllers\CrudusprController::class,'store']);
 Route::delete('prop/{id}',[\App\Http\Controllers\CrudusprController::class,'destroy']);
+Route::delete('reservation/{id}',[\App\Http\Controllers\ReservationController::class,'destroy']);
+
 
 // Crud user
 Route::post('users',[\App\Http\Controllers\UserController::class,'index']);
 Route::get('user/{id}',[\App\Http\Controllers\UserController::class,'show']);
 Route::delete('user/{id}',[\App\Http\Controllers\UserController::class,'destroy']);
+Route::post('reservation',[\App\Http\Controllers\ReservationController::class,'store']);
+Route::get('reservations/{id}',[\App\Http\Controllers\ReservationController::class,'index']);
+Route::get('reservation/{id}',[\App\Http\Controllers\ReservationController::class,'show']);
+
 
 
 // admin
