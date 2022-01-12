@@ -24,8 +24,8 @@ class CreateReservationsTable extends Migration
             $table->foreign('stade_id')
             ->references('id')->on('stades')
             ->onDelete('cascade');
-            $table->datetime('date_debut');
-            $table->datetime('date_fin');
+            $table->string('date');
+            $table->string('horaire_reservation');
             $table->string('message')->nullable();
             $table->string('service')->nullable();
             $table->string('etat');

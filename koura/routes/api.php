@@ -33,7 +33,8 @@ Route::delete('user/{id}',[\App\Http\Controllers\UserController::class,'destroy'
 Route::post('reservation',[\App\Http\Controllers\ReservationController::class,'store']);
 Route::get('reservations/{id}',[\App\Http\Controllers\ReservationController::class,'index']);
 Route::get('reservation/{id}',[\App\Http\Controllers\ReservationController::class,'show']);
-
+Route::get('heuredispo/{date}/{stadeid}',[\App\Http\Controllers\ReservationController::class,'heure_dispo']);
+Route::get('heuredispo/{interval}/{start_time}/{end_time}',[\App\Http\Controllers\ReservationController::class,'getTimeSlot']);
 
 
 // admin
