@@ -46,6 +46,12 @@ Route::get('stade/{id}',[\App\Http\Controllers\StadeController::class,'show']);
 Route::post('addstade',[\App\Http\Controllers\StadeController::class,'store']);
 Route::delete('stade/{id}',[\App\Http\Controllers\StadeController::class,'destroy']);
 
+//Crud charge
+Route::post('charges',[\App\Http\Controllers\ChargeController::class,'index']);
+Route::get('charge/{id}',[\App\Http\Controllers\ChargeController::class,'show']);
+Route::delete('charge/{id}',[\App\Http\Controllers\ChargeController::class,'destroy']);
+Route::post('addcharge',[\App\Http\Controllers\ChargeController::class,'store']);
+
 Route::post('/changepassword',[\App\Http\Controllers\ProfileController::class, 'change_password']);
 
 Route::group(['middleware' => ['api']], function() {
