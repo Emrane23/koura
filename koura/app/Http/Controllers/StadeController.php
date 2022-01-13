@@ -69,6 +69,13 @@ class StadeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $stade=Stade::find($id);
+        if (empty($stade)) {
+
+            return response()->json(["error" => "not found! "], 400);
+        }
+        $input = $request->all();
+        $stade->update($input);
     }
 
     /**
