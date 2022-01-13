@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Stade;
+use App\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,9 @@ class StadeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($type)
     {
-        $stade = Stade::all();
+        $stade = Stade::where('type',$type)->get();
         return response()->json($stade, 200);
     }
 
@@ -36,7 +37,7 @@ class StadeController extends Controller
         //        file_put_contents('storage\stades\\'.$filename,base64_decode($request->image));
         //        $input['image'] = $filename;
         //    }
-
+        $input['nom_proprietaire']=User::where('id',$request->proprietaire_id)->value('name');
         $stade = Stade::create($input);
         return response()->json($stade, 200);
     }

@@ -8,11 +8,11 @@ class Stade extends Model
 {
     
     protected $fillable = [
-        'proprietaire_id','name', 'gouvernorat' , 'delegation', 'image','capacite' , 'horaire_ouverture', 'horaire_fermeture' , 'adresse' , 'tarif',
+        'proprietaire_id','nom_proprietaire','type','name', 'gouvernorat' , 'delegation', 'image','capacite' , 'horaire_ouverture', 'horaire_fermeture' , 'adresse' , 'tarif',
     ];
 
     protected $hidden = [
-        'created_at','updated_at'  ,'proprietaire_id'
+        'created_at','updated_at'  
     ];
 
 

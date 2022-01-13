@@ -41,7 +41,7 @@ Route::get('heuredispo/{interval}/{start_time}/{end_time}',[\App\Http\Controller
 Route::post('register', [\App\Http\Controllers\AuthController::class, 'register']);
 
 //Crud stade
-Route::post('stades',[\App\Http\Controllers\StadeController::class,'index']);
+Route::post('stades/{type}',[\App\Http\Controllers\StadeController::class,'index']);
 Route::get('stade/{id}',[\App\Http\Controllers\StadeController::class,'show']);
 Route::post('addstade',[\App\Http\Controllers\StadeController::class,'store']);
 Route::delete('stade/{id}',[\App\Http\Controllers\CrudusprController::class,'destroy']);

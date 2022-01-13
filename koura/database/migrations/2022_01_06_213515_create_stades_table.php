@@ -19,7 +19,9 @@ class CreateStadesTable extends Migration
             $table->foreign('proprietaire_id')
             ->references('id')->on('users')
             ->onDelete('cascade');
+            $table->string('nom_proprietaire');
             $table->string('name');
+            $table->string('type');
             $table->string('gouvernorat');
             $table->string('delegation');
             $table->string('image')->nullable();
