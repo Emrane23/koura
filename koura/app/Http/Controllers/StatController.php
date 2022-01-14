@@ -14,7 +14,12 @@ class StatController extends Controller
         
        $propsum =User::where("role","=","Prop")->count();
        $usersum =User::where("role","=","User")->count();
-       $stade= Stade::all()->count();
-        return response()->json(array ('Proprietaire' =>$propsum,'Utilisateur' =>$usersum, 'Stade'=>$stade));
+       $stadefoot= Stade::where('type','Football')->count();
+       $stadetennis=Stade::where('type','Tennis')->count();
+       $stadebasket=Stade::where('type','Basketball')->count();
+        return response()->json(array ('Proprietaire' =>$propsum,'Utilisateur' =>$usersum, 'Stade foot'=>$stadefoot
+        ,'Stade tennis'=>$stadetennis,'Stade basket'=>$stadebasket)
+    
+    );
     }
 }

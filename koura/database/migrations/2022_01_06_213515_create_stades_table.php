@@ -20,8 +20,10 @@ class CreateStadesTable extends Migration
             ->references('id')->on('users')
             ->onDelete('cascade');
             $table->string('nom_proprietaire');
+            $table->string('prenom_proprietaire');
             $table->string('name');
             $table->string('type');
+            $table->boolean('option');
             $table->string('gouvernorat');
             $table->string('delegation');
             $table->string('image')->nullable();

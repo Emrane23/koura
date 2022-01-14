@@ -37,7 +37,9 @@ class StadeController extends Controller
         //        file_put_contents('storage\stades\\'.$filename,base64_decode($request->image));
         //        $input['image'] = $filename;
         //    }
-        $input['nom_proprietaire']=User::where('id',$request->proprietaire_id)->value('name');
+        $input['nom_proprietaire']=User::where('id',$request->proprietaire_id)->value('nom');
+        $input['prenom_proprietaire']=User::where('id',$request->proprietaire_id)->value('prenom');
+
         $stade = Stade::create($input);
         return response()->json($stade, 200);
     }
