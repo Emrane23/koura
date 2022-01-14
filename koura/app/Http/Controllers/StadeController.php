@@ -76,6 +76,8 @@ class StadeController extends Controller
         }
         $input = $request->all();
         $stade->update($input);
+        return response()->json($stade, 200);
+
     }
 
     /**
