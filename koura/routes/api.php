@@ -44,6 +44,7 @@ Route::post('register', [\App\Http\Controllers\AuthController::class, 'register'
 Route::post('stades/{type}',[\App\Http\Controllers\StadeController::class,'index']);
 Route::get('stade/{id}',[\App\Http\Controllers\StadeController::class,'show']);
 Route::post('addstade',[\App\Http\Controllers\StadeController::class,'store']);
+Route::post('updatestade',[\App\Http\Controllers\StadeController::class,'update']);
 Route::delete('stade/{id}',[\App\Http\Controllers\StadeController::class,'destroy']);
 
 //Crud charge
