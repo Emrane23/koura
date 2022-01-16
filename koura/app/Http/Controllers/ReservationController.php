@@ -23,7 +23,37 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+        $debut=$request->input('horaire_debut');
+        $fin=$request->input('horaire_fin');
+        $date=$request->input('date');
+        $idstade=$request->input('stade_id');
+        $start = new \DateTime($debut);
+        $end = new \DateTime($fin);
+        $horair_debut = $start->format('H:i');
+    
+        $horair_fin = $end->format('H:i');
+        
+        $reservations=reservation::where('stade_id',$idstade)->where('date',$date)->get();
+ 
+        foreach ($reservations as $reservation) {
+             $dbstart=new \DateTime($reservation->horaire_debut);
+            $dbend=new \DateTime($reservation->horaire_fin);
+            $dbhorair_debut= $dbstart->format('H:i');
+          
+            $dbhorair_fin=$dbend->format('H:i');
+            
+            if ( $horair_debut >= $dbhorair_debut && $horair_debut <= $dbhorair_fin ){
+                return response()->json(["error" => "Période déja réservé! "], 400);
+            }
+            elseif ( $horair_fin >= $dbhorair_debut && $horair_fin <= $dbhorair_fin ) {
+                return response()->json(["error" => "Période déja réservé! "], 400);
+
+            }
+        }
+ 
+        
         $input['etat'] = "En attente";
+
         $reservation = reservation::create($input);
         return response()->json($reservation, 200);
     }
@@ -57,35 +87,35 @@ class ReservationController extends Controller
 
 
 
-    public function heure_dispo($date, $idstade)
-    {
-        $start_time = Stade::where('id', $idstade)->value('horaire_ouverture');
-        $end_time = Stade::where('id', $idstade)->value('horaire_fermeture');
-        // $start_time ="08:00";
-        // $end_time = "20:00";
+    // public function heure_dispo($date, $idstade)
+    // {
+    //     $start_time = Stade::where('id', $idstade)->value('horaire_ouverture');
+    //     $end_time = Stade::where('id', $idstade)->value('horaire_fermeture');
+    //     // $start_time ="08:00";
+    //     // $end_time = "20:00";
 
 
-         $slots = $this->getTimeSlot(120, $start_time, $end_time);
-        $heuresdispo = [];
-        foreach ($slots as $slot) {
-            $value1=$slot['horaire_debut'];
-            $value2=$slot['horaire_fin'];
-            $lastvalue="De ".$value1." a "."$value2 ";
-            array_push($heuresdispo,$lastvalue);
-        }
+    //      $slots = $this->getTimeSlot(120, $start_time, $end_time);
+    //     $heuresdispo = [];
+    //     foreach ($slots as $slot) {
+    //         $value1=$slot['horaire_debut'];
+    //         $value2=$slot['horaire_fin'];
+    //         $lastvalue="De ".$value1." a "."$value2 ";
+    //         array_push($heuresdispo,$lastvalue);
+    //     }
     
-        $heuresreserve = DB::table('reservations')->where('date',$date)->pluck('horaire_reservation');
+    //     $heuresreserve = DB::table('reservations')->where('date',$date)->pluck('horaire_reservation');
 
     
 
-        foreach ($heuresreserve as $heure) {
+    //     foreach ($heuresreserve as $heure) {
 
-            if (($key = array_search($heure, $heuresdispo)) !== false) {
-                unset($heuresdispo[$key]);
-            }
-        }
-        return response()->json($heuresdispo, 200);
-    }
+    //         if (($key = array_search($heure, $heuresdispo)) !== false) {
+    //             unset($heuresdispo[$key]);
+    //         }
+    //     }
+    //     return response()->json($heuresdispo, 200);
+    // }
 
 
 

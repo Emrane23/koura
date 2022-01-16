@@ -8,7 +8,7 @@ class reservation extends Model
 {
     
     protected $fillable = [
-        'client_id' ,'stade_id', 'date', 'horaire_reservation', 'message', 'service', 'etat'
+        'client_id' ,'stade_id', 'date', 'horaire_debut', 'horaire_fin', 'message', 'service', 'etat'
     ];
 
     /**
