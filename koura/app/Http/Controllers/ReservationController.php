@@ -148,4 +148,35 @@ class ReservationController extends Controller
 
         // return $slots;
     }
+
+
+    public function reserpardate($date)
+    {
+
+        $reservations=DB::table('reservations')->pluck('date');
+        
+
+        // [
+        //     {
+        //         start: "01-01-2022",
+        //         reservation:[
+        //             {
+        //                 client
+        //                 message
+        //                 horaire_start:
+        //                 horaire_end
+        //             },
+        //             {}
+        //         ],
+        //         title: 'total de resrvation'
+        //         etat:
+        //     },
+        // ]
+        
+    
+        
+    
+
+    }
+
 }
