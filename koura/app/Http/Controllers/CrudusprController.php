@@ -30,7 +30,15 @@ class CrudusprController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $validator = Validator::make($request->all(), [
+                    'pseudo' => 'unique:users',
+                    'email' => 'required|string|email|max:255|unique:users',
+                    
+                ]);
+    
+                if($validator->fails()){
+                        return response()->json($validator->errors()->toJson(), 400);
+                }
         $input = $request->all();
         $input['password']=Hash::make($request->get('telephone'));
         $user = User::create($input);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\reservation;
 use App\Stade;
 use Carbon\CarbonPeriod;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -149,12 +150,53 @@ class ReservationController extends Controller
         // return $slots;
     }
 
+    public function reservdate($date)
+    {
+        $reservation= reservation::where('date',$date)->get();
+        return response()->json($reservation, 200);
+    }
 
-    public function reserpardate($date)
+    
+
+    public function Listpardate()
     {
 
-        $reservations=DB::table('reservations')->pluck('date');
+    //    $result= reservation::select([DB::raw('* as listes'),
+    //   DB::raw('count(*) as nbr_reservation'),  DB::raw('DATE(date) as date')
+    // ])->groupBy('date')
+    // ->get();
+    $liste= DB::table('reservations')->select(DB::raw('DATE(date) as date'), DB::raw('count(*) as nbr_reservation'))->Select('reservations * ')
+        ->groupBy('date')
+        ->get();
+        return response()->json($liste, 200); 
         
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // [
         //     {

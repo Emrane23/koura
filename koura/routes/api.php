@@ -34,8 +34,11 @@ Route::post('reservation',[\App\Http\Controllers\ReservationController::class,'s
 Route::get('reservations/{id}',[\App\Http\Controllers\ReservationController::class,'index']);
 Route::get('reservation/{id}',[\App\Http\Controllers\ReservationController::class,'show']);
 Route::get('heuredispo/{date}/{stadeid}',[\App\Http\Controllers\ReservationController::class,'heure_dispo']);
-Route::get('heuredispo/{interval}/{start_time}/{end_time}',[\App\Http\Controllers\ReservationController::class,'getTimeSlot']);
+// Route::get('heuredispo/{interval}/{start_time}/{end_time}',[\App\Http\Controllers\ReservationController::class,'getTimeSlot']);
 
+//***** Reservation list */
+Route::post('reservationpardate',[\App\Http\Controllers\ReservationController::class,'reserpardate']);
+Route::get('reser/{date}',[\App\Http\Controllers\ReservationController::class,'reservdate']);
 
 // admin
 Route::post('register', [\App\Http\Controllers\AuthController::class, 'register']);

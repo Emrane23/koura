@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('sexe');
             $table->string('delegation');
             $table->string('type_user');
-            $table->string('pseudo');
+            $table->string('pseudo')->unique();
             $table->string('nbr_terrain')->nullable();
             $table->string('localisation')->nullable();
             $table->string('telephone')->nullable();
