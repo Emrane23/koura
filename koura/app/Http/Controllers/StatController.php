@@ -17,8 +17,8 @@ class StatController extends Controller
        $stadefoot= Stade::where('type','Football')->count();
        $stadetennis=Stade::where('type','Tennis')->count();
        $stadebasket=Stade::where('type','Basketball')->count();
-        return response()->json(array ('Proprietaire' =>$propsum,'Utilisateur' =>$usersum, 'Stade foot'=>$stadefoot
-        ,'Stade tennis'=>$stadetennis,'Stade basket'=>$stadebasket)
+        return response()->json(array ('Proprietaire' =>$propsum,'Utilisateur' =>$usersum, 'Stade_foot'=>$stadefoot
+        ,'Stade_tennis'=>$stadetennis,'Stade_basket'=>$stadebasket)
     
     );
     }

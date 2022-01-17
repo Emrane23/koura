@@ -26,7 +26,7 @@ class CreateStadesTable extends Migration
             $table->boolean('option');
             $table->string('gouvernorat');
             $table->string('delegation');
-            $table->string('image')->nullable();
+            $table->text('image')->nullable();
             $table->string('capacite');
             $table->string('horaire_ouverture');
             $table->string('horaire_fermeture');

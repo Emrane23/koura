@@ -40,6 +40,9 @@ Route::get('heuredispo/{date}/{stadeid}',[\App\Http\Controllers\ReservationContr
 Route::post('reservationpardate',[\App\Http\Controllers\ReservationController::class,'reserpardate']);
 Route::get('reser/{date}',[\App\Http\Controllers\ReservationController::class,'reservdate']);
 
+Route::get('nbrreser/{date}',[\App\Http\Controllers\ReservationController::class,'nbr_reservation_par_date']);
+Route::get('nbrreserstade/{date}/{stadeid}',[\App\Http\Controllers\ReservationController::class,'nbr_reservation_par_stade']);
+
 // admin
 Route::post('register', [\App\Http\Controllers\AuthController::class, 'register']);
 

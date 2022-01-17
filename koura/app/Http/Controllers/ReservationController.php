@@ -170,55 +170,24 @@ class ReservationController extends Controller
         ->get();
         return response()->json($liste, 200); 
         
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // [
-        //     {
-        //         start: "01-01-2022",
-        //         reservation:[
-        //             {
-        //                 client
-        //                 message
-        //                 horaire_start:
-        //                 horaire_end
-        //             },
-        //             {}
-        //         ],
-        //         title: 'total de resrvation'
-        //         etat:
-        //     },
-        // ]
-        
-    
-        
     
 
     }
+
+
+    public function nbr_reservation_par_date($date)
+    {
+        $reservation= reservation::where('date',$date)->count();
+        return response()->json($reservation, 200);
+
+    }
+
+    public function nbr_reservation_par_stade($date, $stadeid)
+    {
+        $reservation= reservation::where('date',$date)->where('stade_id',$stadeid)->count();
+        return response()->json($reservation, 200);
+
+    }
+
 
 }
