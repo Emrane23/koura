@@ -165,7 +165,7 @@ class ReservationController extends Controller
     //   DB::raw('count(*) as nbr_reservation'),  DB::raw('DATE(date) as date')
     // ])->groupBy('date')
     // ->get();
-    $liste= DB::table('reservations')->select(DB::raw('DATE(date) as date'), DB::raw('count(*) as nbr_reservation'))->Select('reservations * ')
+    $liste= DB::table('reservations')->select(DB::raw('DATE(date) as date'), DB::raw('count(*) as nbr_reservation'))
         ->groupBy('date')
         ->get();
         return response()->json($liste, 200); 
