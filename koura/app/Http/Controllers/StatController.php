@@ -25,6 +25,17 @@ class StatController extends Controller
     );
     }
 
+    public function stat_reservation_stade_d_prop($propid) 
+    {
+        // réservations des stade d'un prop
+        
+        $stades=Stade::where('proprietaire_id',$propid)->pluck('id');
+        $collection= reservation::whereIn('stade_id', $stades)->pluck('stade_id');
+        $counted = $collection->countBy();
+        $result=$counted->sortDesc();
+        return response()->json($result,200);
+    }
+
     public function stat_reservation_stade() 
     {
         //Top 3 stades qui porte le nombre le plus grand de Réservation

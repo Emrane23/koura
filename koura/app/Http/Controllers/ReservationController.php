@@ -152,6 +152,7 @@ class ReservationController extends Controller
 
     public function reservdate($date)
     {
+        //liste réservation par date 
         $reservation= reservation::where('date',$date)->get();
         return response()->json($reservation, 200);
     }
@@ -177,6 +178,8 @@ class ReservationController extends Controller
 
     public function nbr_reservation_par_date($date)
     {
+        //nombre réservation total par date
+
         $reservation= reservation::where('date',$date)->count();
         return response()->json($reservation, 200);
 
@@ -184,6 +187,8 @@ class ReservationController extends Controller
 
     public function nbr_reservation_par_stade($date, $stadeid)
     {
+        //nombre réservation d'un stade par date
+
         $reservation= reservation::where('date',$date)->where('stade_id',$stadeid)->count();
         return response()->json($reservation, 200);
 

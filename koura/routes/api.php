@@ -23,7 +23,7 @@ Route::post('login', [\App\Http\Controllers\AuthController::class, 'authenticate
 Route::post('stat',[\App\Http\Controllers\StatController::class,'stat']);
 Route::get('statusersreserv',[\App\Http\Controllers\StatController::class,'stat_reservation']);
 Route::get('statreservstade',[\App\Http\Controllers\StatController::class,'stat_reservation_stade']);
-
+Route::get('statpropstade/{propid}',[\App\Http\Controllers\StatController::class,'stat_reservation_stade_d_prop']);
 
 
 Route::post('props',[\App\Http\Controllers\CrudusprController::class,'index']);
