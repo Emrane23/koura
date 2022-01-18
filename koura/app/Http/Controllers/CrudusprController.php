@@ -42,15 +42,15 @@ class CrudusprController extends Controller
         $input = $request->all();
         $input['password']=Hash::make($request->get('telephone'));
         $user = User::create($input);
-        // $email=$user['email'];
-        // $details = [
-        //     'email' => $request->get('email'),
-        //      'password' => $request->get('telephone')
-        //  ];
+        $email=$user['email'];
+        $details = [
+            'email' => $request->get('email'),
+             'password' => $request->get('telephone')
+         ];
              
          
          
-        //  Mail::to($email)->send(new Compte($details));
+         Mail::to($email)->send(new Compte($details));
         return response()->json(compact('user'),201);
     }
 
