@@ -17,7 +17,7 @@ class reservation extends Model
      * @var array
      */
     protected $hidden = [
-        'created_at','updated_at','client_id' ,'stade_id'
+        'created_at','updated_at'
     ];
 
     public function clients(){
