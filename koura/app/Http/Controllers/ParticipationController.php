@@ -38,6 +38,13 @@ class ParticipationController extends Controller
 
             return response()->json(["error" => "vous etes déjà inscrit à ce tournoi ! "], 400);
         }
+       $dateparticip= strtotime(date('Y-m-d H:i:s')) ;
+       $datetournoi=Tournoi::find($idtournoi)->date_fin;
+       $datetournoi=strtotime($datetournoi);
+       if ($dateparticip>$datetournoi) {
+
+        return response()->json(["error" => "la date final pour la participation est dépassé ! "], 400);
+    }
         
         $input = $request->all();
         $participation = Participation::create($input);
