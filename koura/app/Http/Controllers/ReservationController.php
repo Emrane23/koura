@@ -153,7 +153,7 @@ class ReservationController extends Controller
     public function reservdate($date)
     {
         //liste réservation par date 
-        $reservation= reservation::where('date',$date)->get();
+        $reservation= reservation::with('Clients')->with('stades')->where('date',$date)->get();
         return response()->json($reservation, 200);
     }
 
