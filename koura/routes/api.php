@@ -46,8 +46,10 @@ Route::get('prop/{id}',[\App\Http\Controllers\CrudusprController::class,'show'])
 Route::post('addpropsusers',[\App\Http\Controllers\CrudusprController::class,'store']);
 Route::delete('prop/{id}',[\App\Http\Controllers\CrudusprController::class,'destroy']);
 Route::delete('reservation/{id}',[\App\Http\Controllers\ReservationController::class,'destroy']);
+Route::post('validreservation/{id}',[\App\Http\Controllers\ReservationController::class,'valide_reservation']);
 Route::get('listreservationprop/{propid}/{date}',[\App\Http\Controllers\ReservationController::class,'list_reserv_dprop']);
-
+Route::get('listreservationtotalprop/{propid}',[\App\Http\Controllers\ReservationController::class,'list_reservtotal_dprop']);
+Route::get('nmbrreservationtotalprop/{propid}',[\App\Http\Controllers\ReservationController::class,'nombre_reservtotal_dprop']);
 
 // Crud user
 Route::post('users',[\App\Http\Controllers\UserController::class,'index']);

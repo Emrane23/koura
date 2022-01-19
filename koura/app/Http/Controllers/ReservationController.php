@@ -205,6 +205,39 @@ class ReservationController extends Controller
 
 
     }
+    public function list_reservtotal_dprop($propid)
+    {
+        //liste reservations total d'un prop
+        $stades=Stade::where('proprietaire_id',$propid)->pluck('id');
+        $reservation= reservation::whereIn('stade_id', $stades)->get();
+        return response()->json($reservation, 200);
 
+    }
+
+    public function nombre_reservtotal_dprop($propid)
+    {
+        //nombre des reservations total d'un prop
+        $stades=Stade::where('proprietaire_id',$propid)->pluck('id');
+        $reservation= reservation::whereIn('stade_id', $stades)->count();
+        return response()->json($reservation, 200);
+
+    }
+
+    
+    public function valide_reservation($reservationid)
+    {
+        //valide une reservation
+        $reservation = reservation::find($reservationid);
+        if (empty($reservation)) {
+
+            return response()->json(["error" => "not found! "], 400);
+        }
+
+        reservation::where('id', $reservationid)
+      ->update(['etat' => "Validé"]);
+      return response()->json(['message'=>'Réservation validé avec succés!'],200);
+
+
+    }
 
 }
