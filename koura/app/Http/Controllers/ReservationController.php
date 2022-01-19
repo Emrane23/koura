@@ -195,4 +195,16 @@ class ReservationController extends Controller
     }
 
 
+    public function list_reserv_dprop($propid, $date )
+    {
+        // liste reservations par date d'un prop
+        
+        $stades=Stade::where('proprietaire_id',$propid)->pluck('id');
+        $reservation= reservation::whereIn('stade_id', $stades)->where('date',$date)->get();
+        return response()->json($reservation, 200);
+
+
+    }
+
+
 }

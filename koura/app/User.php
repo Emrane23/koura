@@ -36,6 +36,11 @@
         public function stades(){
             return $this->hasMany('App\Stade' , 'proprietaire_id','id');
         }
+
+        public function tournois(){
+            return $this->belongsToMany('App\Tournoi' , 'App\Participation', 'user_id','tournoi_id','id', 'id');
+        }
+
         
         public function getJWTIdentifier()
         {

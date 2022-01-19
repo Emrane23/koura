@@ -17,6 +17,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'authenticate']);
 
+//Crud tournoi 
+
+Route::post('tournois',[\App\Http\Controllers\TournoisController::class,'index']);
+Route::get('tournoi/{id}',[\App\Http\Controllers\TournoisController::class,'show']);
+Route::post('addtournoi',[\App\Http\Controllers\TournoisController::class,'store']);
+Route::delete('deltournois/{id}',[\App\Http\Controllers\TournoisController::class,'destroy']);
+
+//Crud participation
+
+Route::post('participations',[\App\Http\Controllers\ParticipationController::class,'index']);
+Route::get('participation/{id}',[\App\Http\Controllers\ParticipationController::class,'show']);
+Route::post('addparticipation',[\App\Http\Controllers\ParticipationController::class,'store']);
+Route::delete('delparticipation/{id}',[\App\Http\Controllers\ParticipationController::class,'destroy']);
+
+
 // ***** Crud proprietaire 
 
 //stat
@@ -24,13 +39,14 @@ Route::post('stat',[\App\Http\Controllers\StatController::class,'stat']);
 Route::get('statusersreserv',[\App\Http\Controllers\StatController::class,'stat_reservation']);
 Route::get('statreservstade',[\App\Http\Controllers\StatController::class,'stat_reservation_stade']);
 Route::get('statpropstade/{propid}',[\App\Http\Controllers\StatController::class,'stat_reservation_stade_d_prop']);
-
+Route::get('nmbrstadesprop/{propid}',[\App\Http\Controllers\StatController::class,'nmbr_stades_prop']);
 
 Route::post('props',[\App\Http\Controllers\CrudusprController::class,'index']);
 Route::get('prop/{id}',[\App\Http\Controllers\CrudusprController::class,'show']);
 Route::post('addpropsusers',[\App\Http\Controllers\CrudusprController::class,'store']);
 Route::delete('prop/{id}',[\App\Http\Controllers\CrudusprController::class,'destroy']);
 Route::delete('reservation/{id}',[\App\Http\Controllers\ReservationController::class,'destroy']);
+Route::get('listreservationprop/{propid}/{date}',[\App\Http\Controllers\ReservationController::class,'list_reserv_dprop']);
 
 
 // Crud user

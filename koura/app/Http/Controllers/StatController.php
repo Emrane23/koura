@@ -60,4 +60,11 @@ class StatController extends Controller
 
 
     }
+
+    public function nmbr_stades_prop($propid)
+    {
+        //nombre total des stades d'un prop
+        $nbr=Stade::where('proprietaire_id',$propid)->count();
+        return response()->json($nbr,200);
+    }
 }
