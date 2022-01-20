@@ -223,6 +223,28 @@ class ReservationController extends Controller
 
     }
 
+    public function listreservprop($propid)
+    {
+        {
+
+
+            //    $result= reservation::select([DB::raw('* as listes'),
+            //   DB::raw('count(*) as nbr_reservation'),  DB::raw('DATE(date) as date')
+            // ])->groupBy('date')
+            // ->get();
+            $stades=Stade::where('proprietaire_id',$propid)->pluck('id');
+        
+            $liste= DB::table('reservations')->whereIn('stade_id', $stades)->select(DB::raw('DATE(date) as date'), DB::raw('count(*) as title'))
+                ->groupBy('date')
+                ->get();
+                return response()->json($liste, 200); 
+                
+            
+        
+            }
+
+    }
+
     
     public function valide_reservation($reservationid)
     {

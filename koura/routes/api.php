@@ -49,6 +49,7 @@ Route::delete('reservation/{id}',[\App\Http\Controllers\ReservationController::c
 Route::post('validreservation/{id}',[\App\Http\Controllers\ReservationController::class,'valide_reservation']);
 Route::get('listreservationprop/{propid}/{date}',[\App\Http\Controllers\ReservationController::class,'list_reserv_dprop']);
 Route::get('listreservationtotalprop/{propid}',[\App\Http\Controllers\ReservationController::class,'list_reservtotal_dprop']);
+Route::get('listreservprop/{propid}',[\App\Http\Controllers\ReservationController::class,'listreservprop']);
 Route::get('nmbrreservationtotalprop/{propid}',[\App\Http\Controllers\ReservationController::class,'nombre_reservtotal_dprop']);
 
 // Crud user
