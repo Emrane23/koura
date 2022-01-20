@@ -98,4 +98,12 @@ class StadeController extends Controller
         }
         $stade->delete();
     }
+
+
+
+    public function liste_stades_prop($propid)
+    {
+        $stade=Stade::where('proprietaire_id',$propid)->get();
+        return response()->json($stade, 200);
+    }
 }
