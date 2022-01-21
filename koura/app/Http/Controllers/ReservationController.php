@@ -262,4 +262,18 @@ class ReservationController extends Controller
 
     }
 
+    public function invalide_reservation($reservationid)
+    {
+        //invalide une reservation
+        $reservation = reservation::find($reservationid);
+        if (empty($reservation)) {
+
+            return response()->json(["error" => "not found! "], 400);
+        }
+
+        reservation::where('id', $reservationid)
+      ->update(['etat' => "Non validé"]);
+      return response()->json(['message'=>'Annulation du réservation avec succés!'],200);
+    }
+
 }
