@@ -40,7 +40,7 @@ Route::get('statusersreserv',[\App\Http\Controllers\StatController::class,'stat_
 Route::get('statreservstade',[\App\Http\Controllers\StatController::class,'stat_reservation_stade']);
 Route::get('statpropstade/{propid}',[\App\Http\Controllers\StatController::class,'stat_reservation_stade_d_prop']);
 Route::get('nmbrstadesprop/{propid}',[\App\Http\Controllers\StatController::class,'nmbr_stades_prop']);
-Route::get('listestadesprop/{propid}',[\App\Http\Controllers\StatController::class,'liste_stades_prop']);
+Route::get('listestadesprop/{propid}',[\App\Http\Controllers\StadeController::class,'liste_stades_prop']);
 
 Route::post('props',[\App\Http\Controllers\CrudusprController::class,'index']);
 Route::get('prop/{id}',[\App\Http\Controllers\CrudusprController::class,'show']);
