@@ -84,6 +84,7 @@ Route::delete('stade/{id}',[\App\Http\Controllers\StadeController::class,'destro
 //Crud charge
 Route::post('charges',[\App\Http\Controllers\ChargeController::class,'index']);
 Route::get('charge/{id}',[\App\Http\Controllers\ChargeController::class,'show']);
+Route::post('updatecharge/{id}',[\App\Http\Controllers\ChargeController::class,'update']);
 Route::delete('charge/{id}',[\App\Http\Controllers\ChargeController::class,'destroy']);
 Route::post('addcharge',[\App\Http\Controllers\ChargeController::class,'store']);
 
