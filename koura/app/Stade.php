@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use App\Image;
 use Illuminate\Database\Eloquent\Model;
 
 class Stade extends Model
@@ -24,4 +24,8 @@ class Stade extends Model
     public function proprietaires(){
         return $this->belongsTo('App\User' , 'proprietaire_id','id');
     }
+
+    public function images(){
+		return $this->hasMany(Image::class);
+	}
 }

@@ -47,11 +47,11 @@ class ProfileController extends Controller
 
     }
 
-    public function change_password (Request $request)   
+    public function change_password (Request $request,  $user_id)   
     
     {
 
-        $user_id = Auth::user()->id;
+        
         $user = user::findOrFail($user_id);
         if ($user) {
  

@@ -87,7 +87,7 @@ Route::get('charge/{id}',[\App\Http\Controllers\ChargeController::class,'show'])
 Route::delete('charge/{id}',[\App\Http\Controllers\ChargeController::class,'destroy']);
 Route::post('addcharge',[\App\Http\Controllers\ChargeController::class,'store']);
 
-Route::post('/changepassword',[\App\Http\Controllers\ProfileController::class, 'change_password']);
+Route::post('changepassword/{userid}',[\App\Http\Controllers\ProfileController::class, 'change_password']);
 
 Route::group(['middleware' => ['api']], function() {
     
