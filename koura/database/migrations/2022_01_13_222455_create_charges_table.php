@@ -15,8 +15,12 @@ class CreateChargesTable extends Migration
     {
         Schema::create('charges', function (Blueprint $table) {
             $table->id();
-            $table->string('montant');
+            $table->float('montant');
             $table->string('designation');
+            $table->float('prix_unitaire');
+            $table->integer('quantité');
+            $table->string('num_facture');
+            $table->mediumText('facture');
             $table->timestamps();
         });
     }

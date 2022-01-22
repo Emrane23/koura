@@ -200,7 +200,7 @@ class ReservationController extends Controller
         // liste reservations par date d'un prop
         
         $stades=Stade::where('proprietaire_id',$propid)->pluck('id');
-        $reservation= reservation::whereIn('stade_id', $stades)->where('date',$date)->with('Clients')->get();
+        $reservation= reservation::whereIn('stade_id', $stades)->where('date',$date)->with('Clients')->with('stades')->get();
         return response()->json($reservation, 200);
 
 

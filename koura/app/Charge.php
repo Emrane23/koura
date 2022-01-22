@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Charge extends Model
 {
     protected $fillable = [
-        'montant','designation',
+        'montant','designation','prix_unitaire','quantité','num_facture','facture'
     ];
 
     protected $hidden = [
