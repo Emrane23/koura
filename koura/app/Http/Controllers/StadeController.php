@@ -16,7 +16,7 @@ class StadeController extends Controller
      */
     public function index($type)
     {
-        $stade = Stade::where('type',$type)->get();
+        $stade = Stade::where('type',$type)->with('images')->get();
         return response()->json($stade, 200);
     }
 
@@ -58,7 +58,7 @@ class StadeController extends Controller
      */
     public function show($id)
     {
-        $stade = Stade::find($id);
+        $stade = Stade::with('images')->find($id);
 
         if (empty($stade)) {
 
@@ -77,13 +77,27 @@ class StadeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $stade=Stade::find($id);
+        $stade=Stade::with('images')->find($id);
+        
         if (empty($stade)) {
 
             return response()->json(["error" => "not found! "], 400);
         }
-        $input = $request->all();
-        $stade->update($input);
+        $stade->fill($request->all());
+        $stade->save();
+        $items = $request['images'];
+        $stade->images()->delete();
+        if($request->hasFile("images")){
+            $files=$request->file("images");
+            foreach($files as $file){
+                $imageName=time().'_'.$file->getClientOriginalName();
+                $request['stade_id']=$stade->id;
+                $request['image']=$imageName;
+                $file->move(\public_path("storage\stades"),$imageName);
+                Image::create($request->all());
+
+            }
+        }
         return response()->json($stade, 200);
 
     }
@@ -103,6 +117,7 @@ class StadeController extends Controller
             return response()->json(["error" => "not found! "], 400);
         }
         $stade->delete();
+        return response()->json(["message" => "Record deleted "],200);
     }
 
 
