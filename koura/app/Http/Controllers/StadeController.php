@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Image;
 use App\Stade;
 use App\User;
 use Illuminate\Support\Facades\File;
@@ -29,18 +29,24 @@ class StadeController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-
-        //     if($request->image != '')
-        //    {
-
-        //        $filename = time() . '.jpg';
-        //        file_put_contents('storage\stades\\'.$filename,base64_decode($request->image));
-        //        $input['image'] = $filename;
-        //    }
         $input['nom_proprietaire']=User::where('id',$request->proprietaire_id)->value('nom');
         $input['prenom_proprietaire']=User::where('id',$request->proprietaire_id)->value('prenom');
 
         $stade = Stade::create($input);
+
+        if($request->hasFile("images")){
+            $files=$request->file("images");
+            foreach($files as $file){
+                $imageName=time().'_'.$file->getClientOriginalName();
+                $request['stade_id']=$stade->id;
+                $request['image']=$imageName;
+                $file->move(\public_path("storage\stades"),$imageName);
+                Image::create($request->all());
+
+            }
+
+        }
+        
         return response()->json($stade, 200);
     }
 

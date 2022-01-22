@@ -53,6 +53,10 @@ class ProfileController extends Controller
 
         
         $user = user::findOrFail($user_id);
+        if (empty($user)) {
+
+            return response()->json(["error" => "not found! "], 400);
+        }
         if ($user) {
  
          if (Hash::check($request['oldpassword'], $user->password))
