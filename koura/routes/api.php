@@ -65,7 +65,7 @@ Route::post('addreservation',[\App\Http\Controllers\ReservationController::class
 Route::get('reservations/{id}',[\App\Http\Controllers\ReservationController::class,'index']);
 Route::get('reservation/{id}',[\App\Http\Controllers\ReservationController::class,'show']);
 
-Route::get('heuredisponible/{stadeid}/{date}',[\App\Http\Controllers\ReservationController::class,'heures_disponible']);
+Route::get('heuredisponible/{stadeid}/{date}/{period}',[\App\Http\Controllers\ReservationController::class,'heures_disponible']);
 
 //***** Reservation list */
 Route::post('reservationpardate',[\App\Http\Controllers\ReservationController::class,'Listpardate']);

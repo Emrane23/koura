@@ -130,36 +130,7 @@ class ReservationController extends Controller
 
 
 
-    function getTimeSlot($interval, $start_time, $end_time)
-    {
-
-        $start = new \DateTime($start_time);
-        $end = new \DateTime($end_time);
-        $startTime = $start->format('H:i');
-        $endTime = $end->format('H:i');
-        $i = 0;
-        $time = [];
-        while (strtotime($startTime) <= strtotime($endTime)) {
-            $start = $startTime;
-            $end = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
-            $startTime = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
-            $i++;
-            if (strtotime($startTime) <= strtotime($endTime)) {
-                $time[$i]['horaire_debut'] = $start;
-                $time[$i]['horaire_fin'] = $end;
-            }
-        }
-        return $time;
-        // $period = new CarbonPeriod($start_time , $interval.' minutes', $end_time);
-        // $slots = [];
-
-        // foreach ($period as $key => $slot) {
-        //     array_push($slots , $slot->format('H:i'));
-        // }
-
-        // return $slots;
-    }
-
+    
     public function reservdate($date)
     {
         //liste réservation par date 
@@ -285,9 +256,38 @@ class ReservationController extends Controller
       ->update(['etat' => "Non validé"]);
       return response()->json(['message'=>'Annulation du réservation avec succés!'],200);
     }
+    function getTimeSlot($interval, $start_time, $end_time)
+    {
+
+        $start = new \DateTime($start_time);
+        $end = new \DateTime($end_time);
+        $startTime = $start->format('H:i');
+        $endTime = $end->format('H:i');
+        $i = 0;
+        $time = [];
+        while (strtotime($startTime) <= strtotime($endTime)) {
+            $start = $startTime;
+            $end = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
+            $startTime = date('H:i', strtotime('+' . $interval . ' minutes', strtotime($startTime)));
+            $i++;
+            if (strtotime($startTime) <= strtotime($endTime)) {
+                $time[$i]['horaire_debut'] = $start;
+                $time[$i]['horaire_fin'] = $end;
+            }
+        }
+        return $time;
+        // $period = new CarbonPeriod($start_time , $interval.' minutes', $end_time);
+        // $slots = [];
+
+        // foreach ($period as $key => $slot) {
+        //     array_push($slots , $slot->format('H:i'));
+        // }
+
+        // return $slots;
+    }
 
 
-    public function heures_disponible($stadeid, $date)
+    public function heures_disponible($stadeid, $date,$period)
     {
         $houverture=  DB::table('stades')->where('id',$stadeid)->value('horaire_ouverture');
         $hfermeture=DB::table('stades')->where('id',$stadeid)->value('horaire_fermeture');
@@ -300,7 +300,8 @@ class ReservationController extends Controller
         {
             $heuresdispo['from'] = $houverture;
             $heuresdispo['to']=$hfermeture;
-            return response()->json($heuresdispo, 200);  
+            $slots = $this->getTimeSlot($period, $houverture, $hfermeture);
+            return response()->json($slots, 200);  
         }
 
         $complet = [];
@@ -335,14 +336,23 @@ class ReservationController extends Controller
         $startTime = $start->format('H:i');
         $endTime = $end->format('H:i');
         $interval=abs(strtotime($endTime) - strtotime($startTime));
-        if ($interval < 30*60)
+        if ($interval < 20*60)
         {
             unset($heuresdispo[$key]);
         }
             
         }
+        $inter=[];
+        foreach ($heuresdispo as $value) {
+            $start_time=$value['from'];
+            $end_time=$value['to'];
+            $slots = $this->getTimeSlot($period, $start_time, $end_time);
+            $result=array_merge($inter, $slots);
+
+        }
+        
       
-        return response()->json($heuresdispo, 200); 
+        return response()->json($result, 200); 
     }
 
 }
