@@ -65,6 +65,7 @@ class ChargeController extends Controller
         }
         $input = $request->all();
         $charge->update($input);
+        return response()->json($charge, 200);
     }
 
     /**

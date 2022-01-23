@@ -31,9 +31,19 @@ class ReservationController extends Controller
         $start = new \DateTime($debut);
         $end = new \DateTime($fin);
         $horair_debut = $start->format('H:i');
-    
         $horair_fin = $end->format('H:i');
-        
+        $houverture=  DB::table('stades')->where('id',$idstade)->value('horaire_ouverture');
+        $hfermeture=DB::table('stades')->where('id',$idstade)->value('horaire_fermeture');
+        $ho= new \DateTime($houverture);
+        $fe=new \DateTime($hfermeture);
+        $houverture=$ho->format('H:i');
+        $hfermeture=$fe->format('H:i');
+
+        if( (strtotime($horair_debut) < strtotime($houverture)) || (strtotime($horair_fin) > strtotime($hfermeture)))
+        {
+            return response()->json(["error" => "Vérifir la date d'ouverture et fermeture de ce stade! "], 400);
+        }
+
         $reservations=reservation::where('stade_id',$idstade)->where('date',$date)->get();
  
         foreach ($reservations as $reservation) {
@@ -274,6 +284,57 @@ class ReservationController extends Controller
         reservation::where('id', $reservationid)
       ->update(['etat' => "Non validé"]);
       return response()->json(['message'=>'Annulation du réservation avec succés!'],200);
+    }
+
+
+    public function heures_disponible($stadeid, $date)
+    {
+
+      $reservations=  DB::table('reservations')
+        ->select(array('horaire_debut', 'horaire_fin'))->where('stade_id',$stadeid)->where('date',$date)
+        ->get();
+        $complet = [];
+        $heuresdispo=[];
+        $i = 0;
+
+        foreach ($reservations as $reservation ) {
+            $i++;
+            $complet[$i]['horaire_debut'] = $reservation->horaire_debut;
+            $complet[$i]['horaire_fin'] = $reservation->horaire_fin;
+        }
+        $houverture=  DB::table('stades')->where('id',$stadeid)->value('horaire_ouverture');
+       
+        $hfermeture=DB::table('stades')->where('id',$stadeid)->value('horaire_fermeture');
+        $j=1;
+        $heuresdispo[1]['from'] = $houverture;
+        $heuresdispo[1]['to']=$complet[1]['horaire_debut'];
+        
+        for ($i=1; $i < count($complet); $i++) { 
+            
+            $j++;
+            
+                $heuresdispo[$j]['from'] = $complet[$i]['horaire_fin'];
+                $heuresdispo[$j]['to']=$complet[$i+1]['horaire_debut'];
+        
+            
+        }
+        $heuresdispo[$j+1]['from'] = $complet[$i]['horaire_fin'];
+        $heuresdispo[$j+1]['to']=$hfermeture;
+        foreach ($heuresdispo as $key => $value) {
+           
+        $start = new \DateTime($value['from']);
+        $end = new \DateTime($value['to']);
+        $startTime = $start->format('H:i');
+        $endTime = $end->format('H:i');
+        $interval=abs(strtotime($endTime) - strtotime($startTime));
+        if ($interval < 45*60)
+        {
+            unset($heuresdispo[$key]);
+        }
+            
+        }
+        return $heuresdispo;
+
     }
 
 }
