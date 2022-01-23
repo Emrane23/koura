@@ -350,7 +350,7 @@ class ReservationController extends Controller
             $end_time=$value['to'];
             $slots = $this->getTimeSlot($period, $start_time, $end_time);
             $result=array_merge($inter, $slots);
-
+            $inter=$result;
         }
       
         return response()->json($result, 200); 
