@@ -53,10 +53,10 @@ class ReservationController extends Controller
           
             $dbhorair_fin=$dbend->format('H:i');
             
-            if ( $horair_debut >= $dbhorair_debut && $horair_debut <= $dbhorair_fin ){
+            if ( $horair_debut > $dbhorair_debut && $horair_debut < $dbhorair_fin ){
                 return response()->json(["error" => "Période déja réservé! "], 400);
             }
-            elseif ( $horair_fin >= $dbhorair_debut && $horair_fin <= $dbhorair_fin ) {
+            elseif ( $horair_fin > $dbhorair_debut && $horair_fin < $dbhorair_fin ) {
                 return response()->json(["error" => "Période déja réservé! "], 400);
 
             }
