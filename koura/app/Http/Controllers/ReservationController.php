@@ -289,12 +289,22 @@ class ReservationController extends Controller
 
     public function heures_disponible($stadeid, $date)
     {
-
-      $reservations=  DB::table('reservations')
+        $houverture=  DB::table('stades')->where('id',$stadeid)->value('horaire_ouverture');
+        $hfermeture=DB::table('stades')->where('id',$stadeid)->value('horaire_fermeture');
+        $heuresdispo=[];
+        $reservations=  DB::table('reservations')
         ->select(array('horaire_debut', 'horaire_fin'))->where('stade_id',$stadeid)->where('date',$date)
         ->get();
+        $nombre=count($reservations);
+        if($nombre==0)
+        {
+            $heuresdispo['from'] = $houverture;
+            $heuresdispo['to']=$hfermeture;
+            return response()->json($heuresdispo, 200);  
+        }
+
         $complet = [];
-        $heuresdispo=[];
+        
         $i = 0;
 
         foreach ($reservations as $reservation ) {
@@ -302,9 +312,7 @@ class ReservationController extends Controller
             $complet[$i]['horaire_debut'] = $reservation->horaire_debut;
             $complet[$i]['horaire_fin'] = $reservation->horaire_fin;
         }
-        $houverture=  DB::table('stades')->where('id',$stadeid)->value('horaire_ouverture');
-       
-        $hfermeture=DB::table('stades')->where('id',$stadeid)->value('horaire_fermeture');
+        
         $j=1;
         $heuresdispo[1]['from'] = $houverture;
         $heuresdispo[1]['to']=$complet[1]['horaire_debut'];
