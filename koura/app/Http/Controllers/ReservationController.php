@@ -327,14 +327,14 @@ class ReservationController extends Controller
         $startTime = $start->format('H:i');
         $endTime = $end->format('H:i');
         $interval=abs(strtotime($endTime) - strtotime($startTime));
-        if ($interval < 45*60)
+        if ($interval < 30*60)
         {
             unset($heuresdispo[$key]);
         }
             
         }
-        return $heuresdispo;
-
+      
+        return response()->json($heuresdispo, 200); 
     }
 
 }
