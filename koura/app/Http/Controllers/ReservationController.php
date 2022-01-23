@@ -296,12 +296,14 @@ class ReservationController extends Controller
         ->select(array('horaire_debut', 'horaire_fin'))->where('stade_id',$stadeid)->where('date',$date)
         ->get();
         $nombre=count($reservations);
+        $inter=[];
         if($nombre==0)
         {
             $heuresdispo['from'] = $houverture;
             $heuresdispo['to']=$hfermeture;
             $slots = $this->getTimeSlot($period, $houverture, $hfermeture);
-            return response()->json($slots, 200);  
+            $result=array_merge($inter, $slots);
+            return response()->json($result, 200);  
         }
 
         $complet = [];
@@ -342,7 +344,7 @@ class ReservationController extends Controller
         }
             
         }
-        $inter=[];
+        
         foreach ($heuresdispo as $value) {
             $start_time=$value['from'];
             $end_time=$value['to'];
@@ -350,7 +352,6 @@ class ReservationController extends Controller
             $result=array_merge($inter, $slots);
 
         }
-        
       
         return response()->json($result, 200); 
     }
