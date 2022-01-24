@@ -229,7 +229,7 @@ class ReservationController extends Controller
     }
 
     
-    public function valide_reservation($reservationid,$email,$validation)
+    public function valide_reservation($reservationid,$email)
     {
         //valide une reservation
         $reservation = reservation::find($reservationid);
@@ -240,7 +240,7 @@ class ReservationController extends Controller
 
         reservation::where('id', $reservationid)
       ->update(['etat' => "Validé"]);
-      
+      $validation="valide";
         $details = [
             'validation' => $validation
          ];
@@ -253,7 +253,7 @@ class ReservationController extends Controller
 
     }
 
-    public function invalide_reservation($reservationid,$email,$validation)
+    public function invalide_reservation($reservationid,$email)
     {
         //invalide une reservation
         $reservation = reservation::find($reservationid);
@@ -264,7 +264,7 @@ class ReservationController extends Controller
 
         reservation::where('id', $reservationid)
       ->update(['etat' => "Non validé"]);
-
+      $validation="non valide";
       $details = [
         'validation' => $validation
      ];
