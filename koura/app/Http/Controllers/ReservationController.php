@@ -8,6 +8,8 @@ use Carbon\CarbonPeriod;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Validationducompte;
 
 class ReservationController extends Controller
 {
@@ -227,7 +229,7 @@ class ReservationController extends Controller
     }
 
     
-    public function valide_reservation($reservationid)
+    public function valide_reservation($reservationid,$email,$validation)
     {
         //valide une reservation
         $reservation = reservation::find($reservationid);
@@ -238,12 +240,20 @@ class ReservationController extends Controller
 
         reservation::where('id', $reservationid)
       ->update(['etat' => "Validé"]);
+      
+        $details = [
+            'validation' => $validation
+         ];
+             
+         
+         
+         Mail::to($email)->send(new Validationducompte($details));
       return response()->json(['message'=>'Réservation validé avec succés!'],200);
 
 
     }
 
-    public function invalide_reservation($reservationid)
+    public function invalide_reservation($reservationid,$email,$validation)
     {
         //invalide une reservation
         $reservation = reservation::find($reservationid);
@@ -254,8 +264,16 @@ class ReservationController extends Controller
 
         reservation::where('id', $reservationid)
       ->update(['etat' => "Non validé"]);
+
+      $details = [
+        'validation' => $validation
+     ];
+     
+     Mail::to($email)->send(new Validationducompte($details));
       return response()->json(['message'=>'Annulation du réservation avec succés!'],200);
     }
+
+
     function getTimeSlot($interval, $start_time, $end_time)
     {
 
