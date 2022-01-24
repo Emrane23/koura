@@ -85,9 +85,17 @@ class StadeController extends Controller
         }
         $stade->fill($request->all());
         $stade->save();
-        $items = $request['images'];
         $stade->images()->delete();
+        $images=$stade->images;
         if($request->hasFile("images")){
+            foreach ($images as $image ) {
+                $path='storage/stades/'.$image->image;
+                if(File::exists($path))
+                {
+                    File::delete($path);
+                }
+                
+            }
             $files=$request->file("images");
             foreach($files as $file){
                 $imageName=time().'_'.$file->getClientOriginalName();
@@ -110,13 +118,25 @@ class StadeController extends Controller
      */
     public function destroy($id)
     {
-        $stade = Stade::find($id);
+        $stade = Stade::with('images')->find($id);
 
         if (empty($stade)) {
 
             return response()->json(["error" => "not found! "], 400);
         }
+        $images=$stade->images;
+
+        foreach ($images as $image ) {
+            $path='storage/stades/'.$image->image;
+            if(File::exists($path))
+            {
+                File::delete($path);
+            }
+            
+        }
+           
         $stade->delete();
+        
         return response()->json(["message" => "Record deleted "],200);
     }
 

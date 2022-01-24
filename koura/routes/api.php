@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('heuredispo/{date}/{stadeid}',[\App\Http\Controllers\ReservationController::class,'heure_dispo']);
- //Route::get('heuredispo/{interval}/{start_time}/{end_time}',[\App\Http\Controllers\ReservationController::class,'getTimeSlot']);
- 
+
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'authenticate']);
 
 //Crud tournoi 
