@@ -29,6 +29,12 @@ class ReservationController extends Controller
         $debut=$request->input('horaire_debut');
         $fin=$request->input('horaire_fin');
         $date=$request->input('date');
+        $dateact= date('Y-m-d');
+        if ($date<$dateact)
+        {
+            return response()->json(["error" => "Ce date déja dépassée ! "], 400);  
+        }
+        
         $idstade=$request->input('stade_id');
         $start = new \DateTime($debut);
         $end = new \DateTime($fin);
