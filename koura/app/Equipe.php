@@ -11,10 +11,10 @@ class Equipe extends Model
     ];
 
     protected $hidden = [
-        'created_at','updated_at','pivot'
+        'updated_at','pivot'
     ];
 
-    public function user(){
+    public function joueurs(){
         return $this->belongsToMany('App\User' , 'App\Equipe_user', 'equipe_id','user_id','id', 'id');
     }
 

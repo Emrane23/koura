@@ -13,7 +13,7 @@ class EquipeController extends Controller
      */
     public function index()
     {
-        $equipe=Equipe::all();
+        $equipe=Equipe::with('createur')->with('joueurs')->get();
         return response()->json($equipe,200);
     }
 
@@ -41,7 +41,7 @@ class EquipeController extends Controller
      */
     public function show($id)
     {
-        $equipe = Equipe::with('createur')->with('user')->find($id);
+        $equipe = Equipe::with('createur')->with('joueurs')->find($id);
 
         if (empty($equipe)) {
             return response()->json(["error" => "not found! "], 400);
