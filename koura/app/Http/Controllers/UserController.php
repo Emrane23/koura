@@ -36,7 +36,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::with('equipe')->find($id);
 
         if (empty($user)) {
 

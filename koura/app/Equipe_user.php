@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Charge extends Model
+class Equipe_user extends Model
 {
     protected $fillable = [
-        'montant','designation','prix_unitaire','quantité','num_facture','facture'
+        'user_id','Equipe_id' 
     ];
 
     protected $hidden = [
-        'updated_at'
+        'created_at','updated_at'  
     ];
 }

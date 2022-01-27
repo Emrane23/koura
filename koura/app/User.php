@@ -3,6 +3,7 @@
     namespace App;
 
     use Illuminate\Notifications\Notifiable;
+    use App\Equipe;
     use Illuminate\Foundation\Auth\User as Authenticatable;
     use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -25,7 +26,7 @@
          * @var array
          */
         protected $hidden = [
-            'password', 'remember_token',
+            'password', 'remember_token','pivot'
         ];
 
 
@@ -41,6 +42,10 @@
             return $this->belongsToMany('App\Tournoi' , 'App\Participation', 'user_id','tournoi_id','id', 'id');
         }
 
+        public function equipe(){
+            return $this->belongsToMany('App\Equipe' , 'App\Equipe_user', 'user_id','equipe_id','id', 'id');
+        }
+        
         
         public function getJWTIdentifier()
         {

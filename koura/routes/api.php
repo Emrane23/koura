@@ -89,6 +89,15 @@ Route::post('updatecharge/{id}',[\App\Http\Controllers\ChargeController::class,'
 Route::delete('charge/{id}',[\App\Http\Controllers\ChargeController::class,'destroy']);
 Route::post('addcharge',[\App\Http\Controllers\ChargeController::class,'store']);
 
+// equipe 
+Route::post('equipes',[\App\Http\Controllers\EquipeController::class,'index']);
+Route::get('equipe/{id}',[\App\Http\Controllers\EquipeController::class,'show']);
+Route::post('addequipe',[\App\Http\Controllers\EquipeController::class,'store']);
+Route::post('updateequipe/{id}/{userid}',[\App\Http\Controllers\EquipeController::class,'update']);
+Route::delete('equipe/{id}/{userid}',[\App\Http\Controllers\EquipeController::class,'destroy']);
+
+
+
 Route::post('changepassword/{userid}',[\App\Http\Controllers\ProfileController::class, 'change_password']);
 
 Route::group(['middleware' => ['api']], function() {
