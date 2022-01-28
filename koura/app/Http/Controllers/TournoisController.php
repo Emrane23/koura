@@ -23,9 +23,10 @@ class TournoisController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request ,$organisateurid)
     {
         $input = $request->all();
+        $input['organisateur_id']=$organisateurid;
         $tournoi = Tournoi::create($input);
         return response()->json($tournoi,201);
     }

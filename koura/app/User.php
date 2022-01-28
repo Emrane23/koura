@@ -39,7 +39,7 @@
         }
 
         public function tournois(){
-            return $this->belongsToMany('App\Tournoi' , 'App\Participation', 'user_id','tournoi_id','id', 'id');
+            return $this->belongsToMany('App\Tournoi' , 'App\Participation', 'user_id','tournoi_id','id', 'id')->withTimestamps();
         }
 
         public function equipe(){

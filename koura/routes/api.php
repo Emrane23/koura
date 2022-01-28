@@ -22,7 +22,7 @@ Route::post('login', [\App\Http\Controllers\AuthController::class, 'authenticate
 
 Route::post('tournois',[\App\Http\Controllers\TournoisController::class,'index']);
 Route::get('tournoi/{id}',[\App\Http\Controllers\TournoisController::class,'show']);
-Route::post('addtournoi',[\App\Http\Controllers\TournoisController::class,'store']);
+Route::post('addtournoi/{organisateur_id}',[\App\Http\Controllers\TournoisController::class,'store']);
 Route::delete('deltournois/{id}',[\App\Http\Controllers\TournoisController::class,'destroy']);
 
 //Crud participation
@@ -31,6 +31,8 @@ Route::post('participations',[\App\Http\Controllers\ParticipationController::cla
 Route::get('participation/{id}',[\App\Http\Controllers\ParticipationController::class,'show']);
 Route::post('addparticipation',[\App\Http\Controllers\ParticipationController::class,'store']);
 Route::delete('delparticipation/{id}',[\App\Http\Controllers\ParticipationController::class,'destroy']);
+Route::post('participation-par-equipe/{equipeid}/{userid}',[\App\Http\Controllers\ParticipationController::class,'participation_par_equipe']);
+
 
 
 // ***** Crud proprietaire 
@@ -95,6 +97,7 @@ Route::get('equipe/{id}',[\App\Http\Controllers\EquipeController::class,'show'])
 Route::post('addequipe',[\App\Http\Controllers\EquipeController::class,'store']);
 Route::post('updateequipe/{id}/{userid}',[\App\Http\Controllers\EquipeController::class,'update']);
 Route::delete('equipe/{id}/{userid}',[\App\Http\Controllers\EquipeController::class,'destroy']);
+Route::post('quitterequipe/{userid}',[\App\Http\Controllers\EquipeController::class,'quitter_equipe']);
 
 
 

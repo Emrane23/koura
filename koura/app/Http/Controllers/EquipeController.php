@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Equipe ;
+use App\Equipe_user;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB ;
 
 class EquipeController extends Controller
 {
@@ -27,6 +29,14 @@ class EquipeController extends Controller
     {
         
         $input = $request->all();
+        $joueurs=DB::table('equipe_users')->pluck('user_id');
+        foreach ($input['joueurs'] as $value) {
+            if ($joueurs->contains($value))
+            {
+                return response()->json(["error" => "il y'a un ou des joueurs(s) qui appartiennent déja à une autre équipe ! "], 400);
+            }
+        }
+
         $equipe = Equipe::create($input);
         $equipe->joueurs()->attach($input['joueurs']);
         return response()->json($equipe,201);
@@ -71,6 +81,13 @@ class EquipeController extends Controller
         }
 
         $input = $request->all();
+        $joueurs=DB::table('equipe_users')->pluck('user_id');
+        foreach ($input['joueurs'] as $value) {
+            if ($joueurs->contains($value))
+            {
+                return response()->json(["error" => "il y'a un ou des joueurs(s) qui appartiennent déja à une autre équipe ! "], 400);
+            }
+        }
         $equipe->update($input);
         $equipe->joueurs()->sync($request->joueurs);
 
@@ -99,5 +116,11 @@ class EquipeController extends Controller
         $equipe->delete();
 
         return response()->json(["message" => "Record deleted "],200);
+    }
+
+    public function quitter_equipe($userid)
+    {
+        DB::table('equipe_users')->where('user_id',$userid)->delete();
+        return response()->json(["message" => "Vous avez quitter l'équipe avec succées"],200);
     }
 }

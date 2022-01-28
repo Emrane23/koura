@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Participation;
 use App\Tournoi;
+use App\Equipe;
 use Illuminate\Http\Request;
 
 class ParticipationController extends Controller
@@ -36,7 +37,7 @@ class ParticipationController extends Controller
         $participation = Participation::where('user_id',$userid)->where('tournoi_id',$idtournoi)->count();
         if ($participation>0) {
 
-            return response()->json(["error" => "vous etes déjà inscrit à ce tournoi ! "], 400);
+            return response()->json(["error" => "vous etes déjà participé à ce tournoi ! "], 400);
         }
        $dateparticip= strtotime(date('Y-m-d H:i:s')) ;
        $datetournoi=Tournoi::find($idtournoi)->date_fin;
@@ -99,6 +100,81 @@ class ParticipationController extends Controller
         }
         $participation->delete();
         Tournoi::where('id',$idtournoi)->increment('places',1);
+
+    }
+
+
+    public function participation_par_equipe(Request $request ,$equipeid,$userid)
+    {
+        $input = $request->all();
+        $equipe=Equipe::find($equipeid);
+        if (empty($equipe)) {
+
+            return response()->json(["error" => "equipe not found! "], 400);
+        }
+        if ($equipe->createur_id !=$userid) {
+
+            return response()->json(["error" => " cette action ne peut pas fait que par le createur de l'equipe !"], 400);
+        }
+        $idtournoi=$request->tournoi_id ;
+        $places=Tournoi::where('id',$idtournoi)->value('places');
+        $nmbrjoueurs=count($input['joueurs']);
+        if ($places>$places) {
+
+            return response()->json(["error" => "Complet! il ne reste des places disponible pour votre equipe ! "], 400);
+        }
+        $input = $request->all();
+        foreach ($input['joueurs'] as $key => $value) {
+            $userid=$value;
+            $participation = Participation::where('user_id',$userid)->where('tournoi_id',$idtournoi)->count();
+        if ($participation>0) {
+            $id=$key+1;
+            return response()->json(["error" => "le joueur $id est déja participé à ce tournoi ! "], 400);
+        }
+        }
+         
+       $dateparticip= strtotime(date('Y-m-d H:i:s')) ;
+       $datetournoi=Tournoi::find($idtournoi)->date_fin;
+       $datetournoi=strtotime($datetournoi);
+       if ($dateparticip>$datetournoi) {
+
+        return response()->json(["error" => "la date final pour la participation est dépassé ! "], 400);
+    }
+
+        
+        
+        $tournoi=Tournoi::find($idtournoi);
+        $participation = $tournoi->users()->attach($input['joueurs']);
+
+        Tournoi::where('id',$idtournoi)->decrement('places',$nmbrjoueurs);
+        return  response()->json(['message'=>'Participation avec succées !'],200);
+    }
+
+
+    public function dparticipation_par_equipe($id ,$equipeid,$userid)
+    {
+    //     $equipe= Equipe::with('joueurs')->find($equipeid);
+    //   return  $idjoueurs=$equipe->pluck('id');
+    //     $participation = Participation::find($id);
+    //     $idtournoi=$participation->tournoi_id;
+
+    //     if (empty($participation)) {
+
+    //         return response()->json(["error" => "not found! "], 400);
+    //     }
+
+    //     $participation->delete();
+    //     Tournoi::where('id',$idtournoi)->increment('places',1);
+
+
+       
+    //     if ($equipe->createur_id !=$userid) {
+
+    //         return response()->json(["error" => " cette action ne peut pas fait que par le createur de l'equipe !"], 400);
+    //     }
+        
+
+    //     return response()->json(["message" => "Record deleted "],200);
 
     }
 }
