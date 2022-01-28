@@ -28,7 +28,7 @@ class EquipeController extends Controller
         
         $input = $request->all();
         $equipe = Equipe::create($input);
-        $equipe->user()->attach($input['joueurs']);
+        $equipe->joueurs()->attach($input['joueurs']);
         return response()->json($equipe,201);
 
     }
@@ -72,7 +72,7 @@ class EquipeController extends Controller
 
         $input = $request->all();
         $equipe->update($input);
-        $equipe->user()->sync($request->joueurs);
+        $equipe->joueurs()->sync($request->joueurs);
 
         return response()->json($equipe, 200);
     }
@@ -95,7 +95,7 @@ class EquipeController extends Controller
 
             return response()->json(["error" => " cette action ne peut pas fait que par le createur de l'equipe !"], 400);
         }
-        $equipe->user()->detach();
+        $equipe->joueurs()->detach();
         $equipe->delete();
 
         return response()->json(["message" => "Record deleted "],200);
