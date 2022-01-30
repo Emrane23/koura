@@ -49,7 +49,7 @@ class ReservationController extends Controller
 
         if( (strtotime($horair_debut) < strtotime($houverture)) || (strtotime($horair_fin) > strtotime($hfermeture)))
         {
-            return response()->json(["error" => "Vérifir la date d'ouverture et fermeture de ce stade! "], 400);
+            return response()->json(["error" => "Vérifier la date d'ouverture et fermeture de ce stade! "], 400);
         }
 
         $reservations=reservation::where('stade_id',$idstade)->where('date',$date)->get();
@@ -66,6 +66,42 @@ class ReservationController extends Controller
             }
             elseif ( $horair_fin > $dbhorair_debut && $horair_fin < $dbhorair_fin ) {
                 return response()->json(["error" => "Période déja réservé! "], 400);
+
+            }
+            elseif( $horair_debut <= $dbhorair_debut && $horair_fin >= $dbhorair_fin){
+                return response()->json(["error" => "Période déja réservé! "], 400);
+
+            }
+        }
+        $tournois= DB::table('tournois')->select(DB::raw('(date_debut) as date_debut'), DB::raw('(date_fin) as date_fin'))->where('stade_id',$idstade)->get();
+        $dbdatestart=$date." ".$horair_debut;
+        $dbdatend=$date." ".$horair_fin;
+        $dbstart=new \DateTime($dbdatestart);
+            $dbend=new \DateTime($dbdatend);
+           
+            $horair_debut= $dbstart->format('Y-m-d H:i');
+         
+            $horair_fin=$dbend->format('Y-m-d H:i');
+
+        foreach ($tournois as $tournoi) {
+            $dbdatestart=$tournoi->date_debut;
+            $dbdatend=$tournoi->date_fin;
+            $dbstart=new \DateTime($dbdatestart);
+            $dbend=new \DateTime($dbdatend);
+           
+            $dbhorair_debut= $dbstart->format('Y-m-d H:i');
+         
+            $dbhorair_fin=$dbend->format('Y-m-d H:i');
+            
+            if ( $horair_debut > $dbhorair_debut && $horair_debut < $dbhorair_fin ){
+                return response()->json(["error" => "Période déja réservé pour un tournoi ! "], 400);
+            }
+            elseif ( $horair_fin > $dbhorair_debut && $horair_fin < $dbhorair_fin ) {
+                return response()->json(["error" => "Période déja réservé pour un tournoi ! "], 400);
+
+            }
+            elseif( $horair_debut <= $dbhorair_debut && $horair_fin >= $dbhorair_fin){
+                return response()->json(["error" => "Période déja réservé pour un tournoi ! "], 400);
 
             }
         }

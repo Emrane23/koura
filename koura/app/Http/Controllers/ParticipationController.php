@@ -151,17 +151,17 @@ class ParticipationController extends Controller
     }
 
 
-    public function dparticipation_par_equipe($id ,$equipeid,$userid)
+    public function dparticipation_par_equipe($equipeid,$userid)
     {
-    //     $equipe= Equipe::with('joueurs')->find($equipeid);
-    //   return  $idjoueurs=$equipe->pluck('id');
-    //     $participation = Participation::find($id);
-    //     $idtournoi=$participation->tournoi_id;
+          $equipe= Equipe::with('joueurs')->find($equipeid);
+          return $idjoueurs=$equipe->joueurs()->pluck('id');
+        
+        // $idtournoi=$participation->tournoi_id;
 
-    //     if (empty($participation)) {
+        // if (empty($participation)) {
 
-    //         return response()->json(["error" => "not found! "], 400);
-    //     }
+        //     return response()->json(["error" => "not found! "], 400);
+        // }
 
     //     $participation->delete();
     //     Tournoi::where('id',$idtournoi)->increment('places',1);
