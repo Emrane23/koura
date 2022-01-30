@@ -33,7 +33,7 @@ Route::get('participation/{id}',[\App\Http\Controllers\ParticipationController::
 Route::post('addparticipation',[\App\Http\Controllers\ParticipationController::class,'store']);
 Route::delete('delparticipation/{id}',[\App\Http\Controllers\ParticipationController::class,'destroy']);
 Route::post('participation-par-equipe/{equipeid}/{userid}',[\App\Http\Controllers\ParticipationController::class,'participation_par_equipe']);
-// Route::post('delete-participation-par-equipe/{equipeid}/{userid}',[\App\Http\Controllers\ParticipationController::class,'dparticipation_par_equipe']);
+ Route::post('delete-participation-par-equipe/{equipeid}/{userid}',[\App\Http\Controllers\ParticipationController::class,'dparticipation_par_equipe']);
 
 
 

@@ -151,30 +151,28 @@ class ParticipationController extends Controller
     }
 
 
-    public function dparticipation_par_equipe($equipeid,$userid)
+    public function dparticipation_par_equipe(Request $request, $equipeid,$userid)
     {
-          $equipe= Equipe::with('joueurs')->find($equipeid);
-          return $idjoueurs=$equipe->joueurs()->pluck('id');
+          $equipe= Equipe::find($equipeid);
+          if ($equipe->createur_id !=$userid)
+           {
+             return response()->json(["error" => " cette action ne peut pas fait que par le createur de l'equipe !"], 400);
+            }
+           $joueurs=$equipe->joueurs;
+           $ids=[];
+           $idtournoi=$request->tournoi_id ;
+           foreach ($joueurs as $key => $joueur)
+           {
+               array_push($ids,$joueur->id);
+               
+           }
+          $increment= Participation::whereIn('user_id',$ids)->where('tournoi_id',$idtournoi)->count();
+
+           Participation::whereIn('user_id',$ids)->where('tournoi_id',$idtournoi)->delete();
         
-        // $idtournoi=$participation->tournoi_id;
+          Tournoi::where('id',$idtournoi)->increment('places',$increment);
 
-        // if (empty($participation)) {
-
-        //     return response()->json(["error" => "not found! "], 400);
-        // }
-
-    //     $participation->delete();
-    //     Tournoi::where('id',$idtournoi)->increment('places',1);
-
-
-       
-    //     if ($equipe->createur_id !=$userid) {
-
-    //         return response()->json(["error" => " cette action ne peut pas fait que par le createur de l'equipe !"], 400);
-    //     }
-        
-
-    //     return response()->json(["message" => "Record deleted "],200);
+       return response()->json(["message" => "Record deleted "],200);
 
     }
 }
