@@ -18,7 +18,7 @@ class Tournoi extends Model
         return $this->belongsToMany('App\User' , 'App\Participation', 'tournoi_id','user_id','id', 'id')->withTimestamps();
     }
     public function equipes(){
-        return $this->belongsToMany('App\User' , 'App\Equipe_tournoi', 'tournoi_id','equipe_id','id', 'id')->withTimestamps();
+        return $this->belongsToMany('App\Equipe' , 'App\Equipe_tournoi', 'tournoi_id','equipe_id','id', 'id')->withTimestamps();
     }
     public function organisateur()
 {

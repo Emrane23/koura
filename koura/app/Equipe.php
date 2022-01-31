@@ -19,7 +19,7 @@ class Equipe extends Model
     }
 
     public function tournois(){
-        return $this->belongsToMany('App\User' , 'App\Equipe_tournoi', 'equipe_id','tournoi_id','id', 'id');
+        return $this->belongsToMany('App\Tournoi' , 'App\Equipe_tournoi', 'equipe_id','tournoi_id','id', 'id');
     }
 
     public function createur()
