@@ -15,7 +15,7 @@ class TournoisController extends Controller
      */
     public function index()
     {
-        $tournoi=Tournoi::all();
+        $tournoi=Tournoi::with('organisateur')->with('equipes')->with('users')->get();
         return response()->json($tournoi,200);
     }
 
@@ -124,7 +124,7 @@ class TournoisController extends Controller
      */
     public function show($id)
     {
-        $tournoi = Tournoi::find($id);
+        $tournoi = Tournoi::with('organisateur')->with('equipes')->with('users')->find($id);
 
         if (empty($tournoi)) {
 

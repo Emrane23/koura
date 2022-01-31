@@ -25,15 +25,21 @@ Route::get('tournoi/{id}',[\App\Http\Controllers\TournoisController::class,'show
 Route::post('addtournoi/{organisateur_id}',[\App\Http\Controllers\TournoisController::class,'store']);
 Route::delete('deltournois/{id}',[\App\Http\Controllers\TournoisController::class,'destroy']);
 
+//crud participation par équipe 
+Route::post('participations-equipes',[\App\Http\Controllers\ParticipationequipeController::class,'index']);
+Route::get('participation-equipe/{id}',[\App\Http\Controllers\ParticipationequipeController::class,'show']);
+Route::post('addparticipation-equipe/{id}',[\App\Http\Controllers\ParticipationequipeController::class,'store']);
+Route::delete('delete-participation-par-equipe/{equipeid}/{userid}/{idtournoi}',[\App\Http\Controllers\ParticipationequipeController::class,'destroy']);
+
+
+
 
 //Crud participation
 
 Route::post('participations',[\App\Http\Controllers\ParticipationController::class,'index']);
 Route::get('participation/{id}',[\App\Http\Controllers\ParticipationController::class,'show']);
-Route::post('addparticipation',[\App\Http\Controllers\ParticipationController::class,'store']);
+Route::post('addparticipation/{userid}',[\App\Http\Controllers\ParticipationController::class,'store']);
 Route::delete('delparticipation/{id}',[\App\Http\Controllers\ParticipationController::class,'destroy']);
-Route::post('participation-par-equipe/{equipeid}/{userid}',[\App\Http\Controllers\ParticipationController::class,'participation_par_equipe']);
- Route::post('delete-participation-par-equipe/{equipeid}/{userid}',[\App\Http\Controllers\ParticipationController::class,'dparticipation_par_equipe']);
 
 
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Tournoi extends Model
@@ -17,4 +17,11 @@ class Tournoi extends Model
     public function users(){
         return $this->belongsToMany('App\User' , 'App\Participation', 'tournoi_id','user_id','id', 'id')->withTimestamps();
     }
+    public function equipes(){
+        return $this->belongsToMany('App\User' , 'App\Equipe_tournoi', 'tournoi_id','equipe_id','id', 'id')->withTimestamps();
+    }
+    public function organisateur()
+{
+    return $this->belongsTo(User::class, 'organisateur_id');
+}
 }
