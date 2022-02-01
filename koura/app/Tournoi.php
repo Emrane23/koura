@@ -2,6 +2,7 @@
 
 namespace App;
 use App\User;
+use App\reservation;
 use Illuminate\Database\Eloquent\Model;
 
 class Tournoi extends Model
@@ -24,4 +25,8 @@ class Tournoi extends Model
 {
     return $this->belongsTo(User::class, 'organisateur_id');
 }
+    public function reservation()
+    {
+        return $this->hasMany(reservation::class);
+    }
 }

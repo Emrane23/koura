@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use App\Tournoi;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,6 +27,9 @@ class reservation extends Model
 
     public function stades(){
         return $this->belongsTo('App\Stade' , 'stade_id','id');
+    }
+    public function tournoi(){
+        return $this->belongsTo(Tournoi::class, 'tournoi_id');
     }
 
 }

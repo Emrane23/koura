@@ -22,7 +22,9 @@ Route::post('login', [\App\Http\Controllers\AuthController::class, 'authenticate
 
 Route::post('tournois',[\App\Http\Controllers\TournoisController::class,'index']);
 Route::get('tournoi/{id}',[\App\Http\Controllers\TournoisController::class,'show']);
-Route::post('addtournoi/{organisateur_id}',[\App\Http\Controllers\TournoisController::class,'store']);
+// Route::post('addtournoi/{organisateur_id}',[\App\Http\Controllers\TournoisController::class,'store']);
+Route::post('addtournoi/{organisateur_id}',[\App\Http\Controllers\TournoisController::class,'add']);
+
 Route::delete('deltournois/{id}',[\App\Http\Controllers\TournoisController::class,'destroy']);
 
 //crud participation par équipe 

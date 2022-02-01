@@ -192,4 +192,151 @@ class TournoisController extends Controller
          return $listdate;
         }
 
+
+        function add(Request $request ,$organisateurid)
+        {
+            $input = $request->all();
+        $debut=$request->input('date_debut');
+        $fin=$request->input('date_fin');
+        $dateact= date('Y-m-d H:i');
+        if ($debut<$dateact)
+        {
+            return response()->json(["error" => "Ce date déja dépassée ! "], 400);  
+        }
+        
+         $idstade=$request->input('stade_id');
+         $start = new \DateTime($debut);
+         $end = new \DateTime($fin);
+         $datedebut=$start->format('Y-m-d');
+         $datefin=$end->format('Y-m-d');
+         $horair_debut = $start->format('H:i');
+         $horair_fin = $end->format('H:i');
+         $houverture=  DB::table('stades')->where('id',$idstade)->value('horaire_ouverture');
+         $hfermeture=DB::table('stades')->where('id',$idstade)->value('horaire_fermeture');
+         $ho= new \DateTime($houverture);
+         $fe=new \DateTime($hfermeture);
+         $houverture=$ho->format('H:i');
+         $hfermeture=$fe->format('H:i');
+
+        if( (strtotime($horair_debut) < strtotime($houverture)) || (strtotime($horair_fin) > strtotime($hfermeture)))
+        {
+            return response()->json(["error" => "Vérifier l'heure d'ouverture et fermeture de ce stade! "], 400);
+        }
+   
+        $listdate=$this->dateintervalle($datedebut,$datefin);
+
+       $reservations=reservation::where('stade_id',$idstade)->whereIn('date',$listdate)->get();
+         $hdbut=new \DateTime($debut);
+         $hfin=new \DateTime($fin);
+         $horair_debut=$hdbut->format('Y-m-d H:i');
+         $horair_fin=$hfin->format('Y-m-d H:i');
+         $horaire_debut=$hdbut->format('H:i');
+         $horaire_fin=$hfin->format('H:i');
+         foreach ($reservations as $reservation) {
+            $dbdatestart=$reservation->date." ".$reservation->horaire_debut;
+            $dbdatend=$reservation->date." ".$reservation->horaire_fin;
+             $dbstart=new \DateTime($dbdatestart);
+            $dbend=new \DateTime($dbdatend);
+           
+            $dbhorair_debut= $dbstart->format('Y-m-d H:i');
+         
+            $dbhorair_fin=$dbend->format('Y-m-d H:i');
+            
+            if ( $horair_debut > $dbhorair_debut && $horair_debut < $dbhorair_fin ){
+                return response()->json(["error" => "Période déja réservé! "], 400);
+            }
+            elseif ( $horair_fin > $dbhorair_debut && $horair_fin < $dbhorair_fin ) {
+                return response()->json(["error" => "Période déja réservé! "], 400);
+
+            }
+            elseif( $horair_debut <= $dbhorair_debut && $horair_fin >= $dbhorair_fin){
+                return response()->json(["error" => "Période déja réservé! "], 400);
+
+            }
+        }
+        $i=1;
+
+        if($datedebut==$datefin){
+            $this->reservastion_equipe($idstade,$organisateurid,$datedebut,$horaire_debut,$horaire_fin);
+        }
+        elseif($datedebut!=$datefin){
+            
+            foreach ($listdate as $key => $date) {
+                if($i==1){
+                    $this->reservastion_equipe($idstade,$organisateurid,$date,$horaire_debut,$hfermeture);
+                }
+                elseif($i==count($listdate)){
+                    $this->reservastion_equipe($idstade,$organisateurid,$date,$houverture,$horaire_fin);
+                }
+                else{
+                    $this->reservastion_equipe($idstade,$organisateurid,$date,$houverture,$hfermeture);
+                }
+                $i=$i+1;
+            }
+
+        }
+        $input = $request->all();
+        $input['organisateur_id']=$organisateurid;
+        $tournoi = Tournoi::create($input);
+        return response()->json($tournoi,201);
+
+
+        }
+
+        
+
+
+        public function mise_ajour(Request $request, $id)
+        {
+            $tournoi=Tournoi::find($id);
+            if (empty($tournoi)) {
+    
+                return response()->json(["error" => "not found! "], 400);
+            
+            }
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            $input = $request->all();
+            $tournoi->update($input);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function reservastion_equipe($stade,$client,$date,$horairedebut,$horairefin)
+        {
+            $reservation=new reservation();
+            $reservation->client_id= $client;
+            $reservation->stade_id= $stade;
+            $reservation->date= $date;
+            $reservation->horaire_debut= $horairedebut;
+            $reservation->horaire_fin =$horairefin ;
+            $reservation->etat="En attente";
+            $reservation->save();
+        }
 }
