@@ -16,7 +16,7 @@ class ReservationController extends Controller
 
     public function index($id)
     {
-        $reservation = reservation::where("stade_id", "=", "$id");
+        $reservation = reservation::where("stade_id", "=", "$id")->whereNull('tournoi_id')->get();
         return response()->json($reservation, 200);
     }
 
@@ -178,7 +178,7 @@ class ReservationController extends Controller
     public function reservdate($date)
     {
         //liste réservation par date 
-        $reservation= reservation::with('Clients')->with('stades')->where('date',$date)->get();
+        $reservation= reservation::with('Clients')->with('stades')->whereNull('tournoi_id')->where('date',$date)->get();
         return response()->json($reservation, 200);
     }
 
@@ -191,7 +191,7 @@ class ReservationController extends Controller
     //   DB::raw('count(*) as nbr_reservation'),  DB::raw('DATE(date) as date')
     // ])->groupBy('date')
     // ->get();
-    $liste= DB::table('reservations')->select(DB::raw('DATE(date) as date'), DB::raw('count(*) as title'))
+    $liste= DB::table('reservations')->whereNull('tournoi_id')->select(DB::raw('DATE(date) as date'), DB::raw('count(*) as title'))
         ->groupBy('date')
         ->get();
         return response()->json($liste, 200); 
@@ -205,7 +205,7 @@ class ReservationController extends Controller
     {
         //nombre réservation total par date
 
-        $reservation= reservation::where('date',$date)->count();
+        $reservation= reservation::where('date',$date)->whereNull('tournoi_id')->count();
         return response()->json($reservation, 200);
 
     }
@@ -214,7 +214,7 @@ class ReservationController extends Controller
     {
         //nombre réservation d'un stade par date
 
-        $reservation= reservation::where('date',$date)->where('stade_id',$stadeid)->count();
+        $reservation= reservation::where('date',$date)->whereNull('tournoi_id')->where('stade_id',$stadeid)->count();
         return response()->json($reservation, 200);
 
     }
@@ -225,7 +225,7 @@ class ReservationController extends Controller
         // liste reservations par date d'un prop
         
         $stades=Stade::where('proprietaire_id',$propid)->pluck('id');
-        $reservation= reservation::whereIn('stade_id', $stades)->where('date',$date)->with('Clients')->with('stades')->get();
+        $reservation= reservation::whereIn('stade_id', $stades)->whereNull('tournoi_id')->where('date',$date)->with('Clients')->with('stades')->get();
         return response()->json($reservation, 200);
 
 
@@ -234,7 +234,7 @@ class ReservationController extends Controller
     {
         //liste reservations total d'un prop
         $stades=Stade::where('proprietaire_id',$propid)->pluck('id');
-        $reservation= reservation::whereIn('stade_id', $stades)->get();
+        $reservation= reservation::whereIn('stade_id', $stades)->whereNull('tournoi_id')->get();
         return response()->json($reservation, 200);
 
     }
@@ -243,7 +243,7 @@ class ReservationController extends Controller
     {
         //nombre des reservations total d'un prop
         $stades=Stade::where('proprietaire_id',$propid)->pluck('id');
-        $reservation= reservation::whereIn('stade_id', $stades)->count();
+        $reservation= reservation::whereNull('tournoi_id')->whereIn('stade_id', $stades)->count();
         return response()->json($reservation, 200);
 
     }
@@ -259,7 +259,7 @@ class ReservationController extends Controller
             // ->get();
             $stades=Stade::where('proprietaire_id',$propid)->pluck('id');
         
-            $liste= DB::table('reservations')->whereIn('stade_id', $stades)->select(DB::raw('DATE(date) as date'), DB::raw('count(*) as title'))
+            $liste= DB::table('reservations')->whereNull('tournoi_id')->whereIn('stade_id', $stades)->select(DB::raw('DATE(date) as date'), DB::raw('count(*) as title'))
                 ->groupBy('date')
                 ->get();
                 return response()->json($liste, 200); 
@@ -404,7 +404,7 @@ class ReservationController extends Controller
         }
             
         }
-        
+        $result="Temps complet !";
         foreach ($heuresdispo as $value) {
             $start_time=$value['from'];
             $end_time=$value['to'];

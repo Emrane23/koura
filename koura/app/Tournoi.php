@@ -25,5 +25,7 @@ class Tournoi extends Model
 {
     return $this->belongsTo(User::class, 'organisateur_id');
 }
-    
+public function temps_reserv(){
+    return $this->hasMany(reservation::class);
+}
 }
