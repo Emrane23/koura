@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'authenticate']);
 
+
 //Crud tournoi 
 
 Route::post('tournois',[\App\Http\Controllers\TournoisController::class,'index']);
@@ -100,6 +101,14 @@ Route::get('charge/{id}',[\App\Http\Controllers\ChargeController::class,'show'])
 Route::post('updatecharge/{id}',[\App\Http\Controllers\ChargeController::class,'update']);
 Route::delete('charge/{id}',[\App\Http\Controllers\ChargeController::class,'destroy']);
 Route::post('addcharge',[\App\Http\Controllers\ChargeController::class,'store']);
+
+
+//crud sponsor
+Route::post('sponsors',[\App\Http\Controllers\SponsorController::class,'index']);
+Route::get('sponsor/{id}',[\App\Http\Controllers\SponsorController::class,'show']);
+Route::post('addsponsor',[\App\Http\Controllers\SponsorController::class,'store']);
+Route::post('updatesponsor/{id}',[\App\Http\Controllers\SponsorController::class,'update']);
+Route::delete('sponsor/{id}',[\App\Http\Controllers\SponsorController::class,'destroy']);
 
 // equipe 
 Route::post('equipes',[\App\Http\Controllers\EquipeController::class,'index']);
