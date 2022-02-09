@@ -16,7 +16,7 @@ class TournoisController extends Controller
      */
     public function index()
     {
-        $tournoi=Tournoi::with('organisateur')->with('temps_reserv')->with('equipes')->with('users')->get();
+        $tournoi=Tournoi::with('organisateur')->with('temps_reserv')->with('equipes.joueurs')->with('users')->get();
         return response()->json($tournoi,200);
     }
 
@@ -125,7 +125,7 @@ class TournoisController extends Controller
      */
     public function show($id)
     {
-        $tournoi = Tournoi::with('organisateur')->with('temps_reserv')->with('equipes')->with('users')->find($id);
+        $tournoi = Tournoi::with('organisateur')->with('temps_reserv')->with('equipes.joueurs')->with('users')->find($id);
 
         if (empty($tournoi)) {
 
@@ -390,13 +390,19 @@ class TournoisController extends Controller
 
         public function filtre_pardate($datedebut)
     {
-        $tournoi = Tournoi::with('organisateur')->with('temps_reserv')->with('equipes')->with('users')->whereDate('date_debut','=',$datedebut)->get();
+        $tournoi = Tournoi::with('organisateur')->with('temps_reserv')->with('equipes.joueurs')->with('users')->whereDate('date_debut','=',$datedebut)->get();
 
         if (empty($tournoi)) {
 
             return response()->json(["error" => "not found! "], 400);
         }
 
+        return response()->json($tournoi, 200);
+    }
+
+    public function tournois_proprietaire($idprop)
+    {
+        $tournoi=Tournoi::with('organisateur')->with('temps_reserv')->with('equipes.joueurs')->with('users')->where('organisateur_id',$idprop)->get();
         return response()->json($tournoi, 200);
     }
 }

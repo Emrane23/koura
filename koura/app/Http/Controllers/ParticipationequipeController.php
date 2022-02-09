@@ -55,7 +55,6 @@ class ParticipationequipeController extends Controller
             
             
         }
-        
         if ($places<count($ids)) {
 
             return response()->json(["error" => "Complet! il ne reste des places disponible pour votre equipe ! "], 400);

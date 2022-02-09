@@ -28,6 +28,7 @@ Route::post('addtournoi/{organisateur_id}',[\App\Http\Controllers\TournoisContro
 Route::post('updatetournoi/{id}',[\App\Http\Controllers\TournoisController::class,'update']);
 Route::delete('deltournois/{id}',[\App\Http\Controllers\TournoisController::class,'destroy']);
 Route::get('filtre-tournoi/{datedebut}',[\App\Http\Controllers\TournoisController::class,'filtre_pardate']);
+Route::get('liste-tournois-organisateur/{idprop}',[\App\Http\Controllers\TournoisController::class,'tournois_proprietaire']);
 
 
 //crud participation par équipe 
