@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Tournoi;
 use App\reservation;
+use Carbon\CarbonPeriod;
 Use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -386,4 +387,16 @@ class TournoisController extends Controller
             $reservation->etat="En attente";
             $reservation->save();
         }
+
+        public function filtre_pardate($datedebut)
+    {
+        $tournoi = Tournoi::with('organisateur')->with('temps_reserv')->with('equipes')->with('users')->whereDate('date_debut','=',$datedebut)->get();
+
+        if (empty($tournoi)) {
+
+            return response()->json(["error" => "not found! "], 400);
+        }
+
+        return response()->json($tournoi, 200);
+    }
 }

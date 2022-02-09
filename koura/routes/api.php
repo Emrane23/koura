@@ -27,6 +27,8 @@ Route::get('tournoi/{id}',[\App\Http\Controllers\TournoisController::class,'show
 Route::post('addtournoi/{organisateur_id}',[\App\Http\Controllers\TournoisController::class,'add']);
 Route::post('updatetournoi/{id}',[\App\Http\Controllers\TournoisController::class,'update']);
 Route::delete('deltournois/{id}',[\App\Http\Controllers\TournoisController::class,'destroy']);
+Route::get('filtre-tournoi/{datedebut}',[\App\Http\Controllers\TournoisController::class,'filtre_pardate']);
+
 
 //crud participation par équipe 
 Route::post('participations-equipes',[\App\Http\Controllers\ParticipationequipeController::class,'index']);
