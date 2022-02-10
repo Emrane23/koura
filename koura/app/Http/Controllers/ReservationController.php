@@ -106,8 +106,11 @@ class ReservationController extends Controller
             }
         }
  
+        if($request->missing('etat'))
+        {
+            $input['etat'] = "En attente";
+        }
         
-        $input['etat'] = "En attente";
 
         $reservation = reservation::create($input);
         return response()->json($reservation, 200);
