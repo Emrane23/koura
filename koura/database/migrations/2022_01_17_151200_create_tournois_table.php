@@ -24,6 +24,7 @@ class CreateTournoisTable extends Migration
             $table->foreign('stade_id')
             ->references('id')->on('stades')
             ->onDelete('cascade');
+            $table->mediumText('image');
             $table->string('nom') ;
             $table->datetime('date_debut') ;
             $table->datetime('date_fin') ;

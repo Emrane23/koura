@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tournoi extends Model
 {
     protected $fillable = [
-        'organisateur_id','stade_id', 'nom','date_debut','date_fin','places', 'cotisation' 
+        'organisateur_id','stade_id','image', 'nom','date_debut','date_fin','places', 'cotisation' 
     ];
 
     protected $hidden = [

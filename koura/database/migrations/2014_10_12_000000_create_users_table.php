@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration
             $table->date('date_de_naissance');
             $table->string('nom_entreprise')->nullable();
             $table->string('patente')->nullable();
+            $table->string('poste_1')->nullable();
+            $table->string('poste_2')->nullable();
             $table->string('role');
             $table->string('gouvernorat');
             $table->string('sexe');

@@ -17,7 +17,7 @@
          * @var array
          */
         protected $fillable = [
-            'nom','prenom', 'email','patente','date_de_naissance', 'type_user','nom_entreprise','pseudo', 'password','role', 'nbr_terrain', 'localisation', 'gouvernorat','sexe','delegation','telephone','image','test',
+            'nom','prenom', 'email','patente','date_de_naissance','poste_1','poste_2', 'type_user','nom_entreprise','pseudo', 'password','role', 'nbr_terrain', 'localisation', 'gouvernorat','sexe','delegation','telephone','image','test',
         ];
 
         /**
