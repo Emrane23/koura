@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('patente')->nullable();
             $table->string('poste_1')->nullable();
             $table->string('poste_2')->nullable();
+            $table->string('pied')->nullable();
             $table->string('role');
             $table->string('gouvernorat');
             $table->string('sexe');

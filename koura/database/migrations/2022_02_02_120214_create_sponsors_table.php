@@ -18,7 +18,7 @@ class CreateSponsorsTable extends Migration
             $table->mediumText('logo')->nullable();
             $table->string('lienweb')->nullable();
             $table->string('nom_sponsor');
-            $table->string('convention_sponsoring');
+            $table->mediumText('convention_sponsoring');
             $table->date('date_fin_contrat');
             $table->timestamps();
         });
